@@ -5,7 +5,9 @@
 #ifndef SFML_GRID_H
 #define SFML_GRID_H
 #include<vector>
+#include<SFML/Graphics.hpp>
 
+enum class Type;
 class Square;
 class Grid {
 private:
@@ -14,8 +16,10 @@ private:
     int height;
 public:
     Grid();
-    ~Grid() = default;
-    void addSquare(const Square& square);
+    ~Grid();
+    void draw(sf::RenderWindow& window) const;
+    int getWidth() const{return width;}
+    int getHeight() const{return height;}
     const Square& getSquare(int x, int y) const;
 };
 

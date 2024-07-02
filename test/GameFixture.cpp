@@ -1,31 +1,25 @@
-
-#include<SFML/Graphics.hpp>
-
-#include "../Game.h"
-#include "../Square.h"
+//
+// Created by stefano on 7/2/24.
+//
 #include "gtest/gtest.h"
+#include "../Game.h"
 
-class GameFixture : public ::testing::Test {
-
+class GameTest : public ::testing::Test {
 protected:
-    virtual void SetUp() {
-        g.createWindow(1000, 1000, "test");
-        entity = new Square(50, sf::Color::Green);
-        g.addEntity(entity);
+    Game* game;
+
+    void SetUp() override {
+        game = new Game();
     }
-    virtual void TearDown(){
-        delete entity;
+
+    void TearDown() override {
+        delete game;
     }
-    Game g;
-    Square* entity;
 };
 
-TEST_F(GameFixture, TestCreateWindow){
-    ASSERT_EQ(1000, g.getWidth());
-    ASSERT_EQ(1000, g.getHeight());
-    ASSERT_EQ("test",g.getTitle());
-}
-
-TEST_F(GameFixture, TestAddEntity){
-    ASSERT_EQ(entity, g.getEntity(0));
+TEST_F(GameTest, CreateWindowAndGetters) {
+    game->createWindow(800, 600, "Test Game");
+    EXPECT_EQ(game->getWidth(), 800);
+    EXPECT_EQ(game->getHeight(), 600);
+    EXPECT_EQ(game->getTitle(), "Test Game");
 }

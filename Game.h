@@ -28,7 +28,6 @@ public:
     unsigned int getWidth() const{return width;}
     unsigned int getHeight() const{return height;}
     const std::string& getTitle() const{return title;}
-    const sf::Event& getEvent() const{return event;}
 };
 
 

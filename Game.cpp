@@ -16,6 +16,7 @@ void Game::createWindow(int w, int h, const std::string &t){
 
 void Game::update() {
     window.clear(sf::Color::Black);
+    grid.draw(window);
     window.display();
 }
 

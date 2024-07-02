@@ -15,7 +15,7 @@ const sf::RectangleShape &Square::getShape() const {
     return shape;
 }
 
-const sf::Color &Square::associateColor(Type type) const {
+sf::Color Square::associateColor(Type type) const {
     switch(type){
         case Type::Basic:
             return sf::Color::White;
@@ -26,4 +26,22 @@ const sf::Color &Square::associateColor(Type type) const {
         case Type::Waypoint:
             return sf::Color::Blue;
     }
+}
+
+void Square::setType(Type type) {
+    this->type = type;
+}
+
+Type Square::getType() const {
+    return type;
+}
+
+void Square::setPos(int x, int y) {
+    if(x>=0 && x < constants::GRID_SIZE && y >= 0 && y < constants::GRID_SIZE){
+        shape.setPosition(x*constants::SQUARE_SIZE, y*constants::SQUARE_SIZE);
+        this->x = x;
+        this->y = y;
+    }
+    else
+        throw std::out_of_range("Posizione del quadrato non valida");
 }
