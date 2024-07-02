@@ -3,7 +3,7 @@
 //
 
 #include "Game.h"
-#include"Entity.h"
+#include"Square.h"
 #include<exception>
 
 void Game::createWindow(int w, int h, const std::string &t){
@@ -16,9 +16,6 @@ void Game::createWindow(int w, int h, const std::string &t){
 
 void Game::update() {
     window.clear(sf::Color::Black);
-    for(const auto& it: entities){  //disegna tutti i blocchi
-        window.draw(it->getShape());
-    }
     window.display();
 }
 
@@ -30,16 +27,5 @@ void Game::eventCheck() {
         }
         update();
     }
-}
-
-void Game::addEntity(Entity *entity) {
-    entities.push_back(entity);
-}
-
-Entity *Game::getEntity(int pos) const {
-    if(pos < entities.size())
-        return entities[pos];
-    else
-        throw std::out_of_range("Posizione non accessibile");
 }
 

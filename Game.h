@@ -9,8 +9,9 @@
 #include<string>
 #include<SFML/Graphics.hpp>
 #include<vector>
+#include"Grid.h"
 
-class Entity;
+class Square;
 class Game {
 private:
     sf::RenderWindow window;
@@ -18,14 +19,12 @@ private:
     unsigned int width;
     unsigned int height;
     std::string title;
-    std::vector<Entity*> entities;   //vettore composto dai vari blocchi che vengono disegnati su chermo
+    Grid grid;   //Griglia che contiene i vari quadrati
     void update();
 public:
     Game() = default;
     void eventCheck();
     void createWindow(int w, int h, const std::string& t);
-    void addEntity(Entity* entity);
-    Entity* getEntity(int pos) const;
     unsigned int getWidth() const{return width;}
     unsigned int getHeight() const{return height;}
     const std::string& getTitle() const{return title;}

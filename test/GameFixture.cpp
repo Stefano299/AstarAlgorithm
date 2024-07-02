@@ -1,23 +1,23 @@
+
 #include<SFML/Graphics.hpp>
 
-#include "gtest/gtest.h"
-
 #include "../Game.h"
-#include "../Entity.h"
+#include "../Square.h"
+#include "gtest/gtest.h"
 
 class GameFixture : public ::testing::Test {
 
 protected:
     virtual void SetUp() {
         g.createWindow(1000, 1000, "test");
-        entity = new Entity(50, sf::Color::Green);
+        entity = new Square(50, sf::Color::Green);
         g.addEntity(entity);
     }
     virtual void TearDown(){
         delete entity;
     }
     Game g;
-    Entity* entity;
+    Square* entity;
 };
 
 TEST_F(GameFixture, TestCreateWindow){
