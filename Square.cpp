@@ -15,7 +15,7 @@ const sf::RectangleShape &Square::getShape() const {
     return shape;
 }
 
-sf::Color Square::associateColor(Type type) const {
+sf::Color Square::associateColor(Type type) const {   //Ad ogni tipo di quadrato è associato in preciso colore, per riconoscerlo facilmente nel gioco
     switch(type){
         case Type::Basic:
             return sf::Color::White;
@@ -25,18 +25,22 @@ sf::Color Square::associateColor(Type type) const {
             return sf::Color::Green;
         case Type::Waypoint:
             return sf::Color::Blue;
+        default:
+            throw std::invalid_argument("Tipo non esistente"); //Ci sono solo 4 tipi...
     }
 }
 
-void Square::setType(Type type) {
+void Square::setType(Type type) {   //Se cambia il tipo del quadrato deve cambiare anche il suo colore
     this->type = type;
+    color = associateColor(type);
+    shape.setFillColor(color);
 }
 
 Type Square::getType() const {
     return type;
 }
 
-void Square::setPos(int x, int y) {
+void Square::setPos(int x, int y) {     //La x e la y indicano le coordinate nella griglia, ma col metodo setPosition inserisco la posizione nella finestra di gioco
     if(x>=0 && x < constants::GRID_SIZE && y >= 0 && y < constants::GRID_SIZE){
         shape.setPosition(x*constants::SQUARE_SIZE, y*constants::SQUARE_SIZE);
         this->x = x;

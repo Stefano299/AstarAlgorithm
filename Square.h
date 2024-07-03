@@ -8,7 +8,7 @@
 #include<SFML/Graphics.hpp>
 #include"GameSingleton.h"
 
-enum class Type{
+enum class Type{   //Enumerazione dei possibili tipo di quadrato
     Basic,
     Obstacle,
     Path,
@@ -21,7 +21,7 @@ protected:
     sf::RectangleShape shape;
     sf::Color color;
     Type type;
-    int x;
+    int x;   //Posizioni nella griglia
     int y;
     int size;
 public:

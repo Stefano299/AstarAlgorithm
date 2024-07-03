@@ -11,7 +11,7 @@ enum class Type;
 class Square;
 class Grid {
 private:
-    Square* squares;
+    Square* squares;  //Griglia di quadrati (intesi come forme geometriche disegnabili)
     int width;
     int height;
 public:

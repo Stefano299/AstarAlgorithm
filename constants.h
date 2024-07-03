@@ -5,7 +5,7 @@
 #ifndef SFML_CONSTANTS_H
 #define SFML_CONSTANTS_H
 
-namespace constants{
+namespace constants{                //Costanti per i "numeri magiici"
     const int SQUARE_SIZE = 25;
     const int GRID_SIZE = 56;
 }

@@ -7,7 +7,7 @@
 
 #include"Game.h"
 
-class GameSingleton {
+class GameSingleton {  //Per assicurarmi ci sia una sola istanza di Game e che sia accessibile facilmente
 public:
     static Game& getInstance();
 private:

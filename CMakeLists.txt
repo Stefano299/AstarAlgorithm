@@ -14,11 +14,16 @@ set(SOURCE_FILES main.cpp
         Square.h
         Grid.cpp
         Grid.h
-        constants.h)
+        constants.h
+        GridNode.cpp
+        GridNode.h
+        stlastar.h
+        fsa.h)
 
 # Link alle librerie Astar
 add_executable(Astar ${SOURCE_FILES}
-        )
+
+)
 
 add_library(core ${SOURCE_FILES})
 target_link_libraries(Astar sfml-graphics sfml-window sfml-system sfml-network sfml-audio core)
