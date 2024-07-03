@@ -15,6 +15,7 @@ private:
 public:
     SquareGrid();
     virtual ~SquareGrid();
+    void reset(); //Rimuove i blocchi path per quando si trova una nuova path
     void draw(sf::RenderWindow& window) const;
     void changeElementType(int x, int y, Type type) override;
     const Square& getSquare(int x, int y) const;

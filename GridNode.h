@@ -17,9 +17,9 @@ using namespace std;
 class GridNode {   //Classe che rappresenta un nodo della mia griglia
 private:
     int GetGrid(int x, int y) const; //Se una coordinata è fuori dalla griglia è come se fosse un ostacolo
-    int x;     // the (x,y) positions of the node
-    int y;
 public:
+    int x; // the (x,y) positions of the node
+    int y;
     static int* worldGrid; //La griglia che indica dove sono gli ostacoli
     GridNode(): x(0), y(0){}
     GridNode(int px, int py) : x(px), y(py){}
