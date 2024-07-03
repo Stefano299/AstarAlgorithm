@@ -8,6 +8,7 @@
 namespace constants{                //Costanti per i "numeri magiici"
     const int SQUARE_SIZE = 25;
     const int GRID_SIZE = 56;
+    const int SCREEN_SIZE = 1400;
 }
 
 

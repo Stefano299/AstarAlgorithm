@@ -12,6 +12,7 @@ private:
     int* numbers; //Numeri che indicano se una casella è percorribile o no
 public:
     NumberGrid();
+    int* getArray() const{return numbers;}
     void changeElementType(int x,  int y, Type type) override;
     int getNummber(int x, int y) const;
     virtual ~NumberGrid();

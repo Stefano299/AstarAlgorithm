@@ -1,4 +1,7 @@
 #include "GridNode.h"
+#include"GameSingleton.h"
+
+int* GridNode::worldGrid = GameSingleton::getInstance().getNumberGridArray();
 
 int GridNode::GetGrid(int x, int y) const {   //Se una coordinata è fuori dalla griglia è come se fosse un ostacolo
     if (x < 0 ||
@@ -131,5 +134,46 @@ bool GridNode::GetSuccessors(AStarSearch<GridNode> *astarsearch, GridNode *paren
 float GridNode::GetCost(GridNode &successor) {
     return (float) GetGrid(x, y);
 
+}
+
+vector<sf::Vector2i> GridNode::getPath(GridNode &nodeStart, GridNode &nodeEnd) {
+    vector<sf::Vector2i> path;
+    AStarSearch<GridNode> astarsearch;
+    unsigned int SearchCount = 0;
+    const unsigned int NumSearches = 1;
+    while (SearchCount < NumSearches) {
+        astarsearch.SetStartAndGoalStates(nodeStart, nodeEnd);
+
+        unsigned int SearchState;
+        unsigned int SearchSteps = 0;
+
+        do {
+            SearchState = astarsearch.SearchStep();
+
+            SearchSteps++;
+        } while (SearchState == AStarSearch<GridNode>::SEARCH_STATE_SEARCHING);
+
+        if (SearchState == AStarSearch<GridNode>::SEARCH_STATE_SUCCEEDED) {
+            cout << "Trovato un percorso" << endl;
+            GridNode *node = astarsearch.GetSolutionStart();
+            int steps = 0;
+            //Qua salto i dettagli dell'inizio del percorso
+            for (;;) {
+                node = astarsearch.GetSolutionNext();
+                if (!node) {
+                    break;
+                }
+                path.push_back(sf::Vector2i (node->x, node->y));
+                steps++;
+            };
+            astarsearch.FreeSolutionNodes(); //Liberare il vettore dei nodi una volta che è stato trovato il percorso
+
+        } else if (SearchState == AStarSearch<GridNode>::SEARCH_STATE_FAILED) {
+            cout << "Non è stato possibile trovare un percorso" << endl;
+        }
+        SearchCount++;
+        astarsearch.EnsureMemoryFreed();
+    }
+    return path;
 }
 
