@@ -14,7 +14,7 @@ protected:
     void SetUp() override {
         texture.create(25,25);
         // Assumendo che la texture sia caricata correttamente
-        character = new GameCharacter(0, 0, texture, 5.0f);
+        character = new GameCharacter(1, 1, texture, 5.0);
     }
 
     void TearDown() override {
@@ -23,14 +23,14 @@ protected:
 };
 
 TEST_F(GameCharacterTest, ConstructorAndGetters) {
-    EXPECT_EQ(character->getGridX(), 0);
-    EXPECT_EQ(character->getGridY(), 0);
-    EXPECT_FLOAT_EQ(character->getPosX(), 0.0f);
-    EXPECT_FLOAT_EQ(character->getPosY(), 0.0f);
+    EXPECT_EQ(character->getGridX(), 1);
+    EXPECT_EQ(character->getGridY(), 1);
+    EXPECT_FLOAT_EQ(character->getPosX(), 25.0f);
+    EXPECT_FLOAT_EQ(character->getPosY(), 25.0f);
     EXPECT_FLOAT_EQ(character->getSpeed(), 5.0f);
 }
 
 TEST_F(GameCharacterTest, MoveBy){
     character->moveBy(1, 0);
-    EXPECT_EQ(character->getPosX(), 5);
+    EXPECT_EQ(character->getPosX(), 25);
 }

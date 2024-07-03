@@ -41,7 +41,6 @@ bool isEqual(float a, float b){
 
 bool enoughDistant(const GameCharacter& hero, const GameCharacter& enemy){
     if(abs(hero.getPosX()-enemy.getPosX() ) > 40 || abs(hero.getPosY() -enemy.getPosY()) > 40){
-
         return true;
     }
     else
@@ -79,13 +78,13 @@ int main() {
     {
         cerr << "Impossibile caricare la texture" << endl;
     }
-    GameCharacter hero(50, 50, heroTxt, 6, (float)constants::SQUARE_SIZE/2, (float)constants::SQUARE_SIZE/2); //Voglio che l'hero abbia l'origine al centro, per gestire meglio le collisioni
+    GameCharacter hero(50, 50, heroTxt, 6, true); //Voglio che l'hero abbia l'origine al centro, per gestire meglio le collisioni
     GameCharacter enemy(3, 3, enemyTxt, 5);
     GridNode::worldGrid = numberGrid.getArray();
     sf::Event event;
     bool moving = false;
-    vector<sf::Vector2i> path;
-    int count =0;
+    vector<sf::Vector2i> path = GridNode::getPath(*enemy.getNode(), *hero.getNode());
+    int count =1;
     while(window.isOpen()) {
         try {
             while (window.pollEvent(event)) {      //Loop per controllare la presenza di eventi
@@ -118,12 +117,13 @@ int main() {
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
                 dx+=1;
                 newPath(count, squareGrid, path, enemy, hero, moving);
-            }
+            }  //TODO Chimare newPath solo una volta se si è pigiato un tasto
             hero.moveBy(10*dx, 10*dy);  //Faccio così per poter normalizzar il vettore spostamento nel metodo moveBy
             if(moving) {
                 enemy.move(path[count].x, path[count].y);
                 if (isEqual(enemy.getPosX(), path[count].x * constants::SQUARE_SIZE) &&
                     isEqual(enemy.getPosY(), path[count].y * constants::SQUARE_SIZE) && enoughDistant(hero, enemy)) {
+                    enemy.setNode(path[count].x, path[count].y);  //Aggiorno il nodo dell'enemy (che sarà il successivo start node)
                     cout << "change" << endl;
                     count++;
                     cout << count << endl;

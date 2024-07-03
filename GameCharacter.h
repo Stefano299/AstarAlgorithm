@@ -20,7 +20,7 @@ private:
     GridNode* node;
     sf::Sprite sprite;
 public:
-    GameCharacter(int gridX, int gridY, const sf::Texture& texture, float speed, float originX = 0, float originY = 0);
+    GameCharacter(int gridX, int gridY, const sf::Texture& texture, float speed, bool centerOrigin = false);
     ~GameCharacter();
     void move(int x, int y);   //Si muove in una posizione INDICATA SULLA GRIGLIA
     void moveBy(float x, float y); //Si muove di x e y
@@ -31,7 +31,7 @@ public:
     float getPosY() const {return posY;}
     float getPosX() const {return posX;}
     float getSpeed() const{return speed;}
-
+    void setNode(int x, int y);
 };
 
 

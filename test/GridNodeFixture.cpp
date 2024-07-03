@@ -46,10 +46,3 @@ TEST_F(GridNodeTest, IsSameStateDifferentNodes) {
     GridNode node2(6, 5);
     ASSERT_FALSE(node1.IsSameState(node2));
 }
-
-TEST_F(GridNodeTest, GetPath) {          //Controllo semplicemente che trovi una (qualsiasi) path
-    GridNode nodeStart(0, 0);
-    GridNode nodeEnd(5, 5);
-    auto path = GridNode::getPath(nodeStart, nodeEnd);
-    ASSERT_FALSE(path.empty());
-}

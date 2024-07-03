@@ -5,22 +5,24 @@
 #include "GameCharacter.h"
 #include "constants.h"
 
-GameCharacter::GameCharacter(int gridX, int gridY, const sf::Texture& texture, float speed, float originX, float originY) {
+GameCharacter::GameCharacter(int gridX, int gridY, const sf::Texture& texture, float speed, bool centerOrigin) {
     this->speed = speed;
     this->gridX = gridX;
     this->gridY = gridY;
     posX = gridX*constants::SQUARE_SIZE;
     posY = gridY*constants::SQUARE_SIZE;
+    setInsideWindow(); //Per essere sicuro non sia inizializzato fuori dalla finestra
     sprite.setTexture(texture);
     sprite.setPosition(posX, posY);
-    sprite.setOrigin(originX, originY); //L'origine dello sprite: da dove si controlla
+    if(centerOrigin)
+        sprite.setOrigin((float)constants::SQUARE_SIZE/2, (float)constants::SQUARE_SIZE/2); //L'origine dello sprite: da dove si controlla
     node = new GridNode(gridX, gridY); //Lo posizione sulla griglia
 }
 
 void GameCharacter::move(int x, int y) {
     sprite.move(x*constants::SQUARE_SIZE, y*constants::SQUARE_SIZE);
-    float dx = x*constants::SQUARE_SIZE-posX;  //Differenze di posizione
-    float dy = y*constants::SQUARE_SIZE-posY;
+    float dx = (float)x*constants::SQUARE_SIZE-posX;  //Differenze di posizione
+    float dy = (float)y*constants::SQUARE_SIZE-posY;
     float hyp = sqrt(dx*dx+dy*dy); //Calcolo l'ipotenusa del triangolo
     float senx = dy/hyp;    //Calcolo seno e coseno del triangolo
     float cosx = dx/hyp;
@@ -28,8 +30,10 @@ void GameCharacter::move(int x, int y) {
     posY += speed*senx;
     gridX = posX/constants::SQUARE_SIZE;
     gridY = posY/constants::SQUARE_SIZE;
-    node->x = gridX;
-    node->y = gridY;
+    /*if(GridNode::worldGrid[gridY*constants::GRID_SIZE+gridX] == 1){ //Evito che per errore il nodo del enemy coincida con un ostacolo...
+        node->x = gridX;
+        node->y = gridY;
+    }*/
     sprite.setPosition(posX, posY);  //SI muove un passo alla volta
 }
 
@@ -58,14 +62,14 @@ void GameCharacter::moveBy(float x, float y) {
         setInsideWindow(); //Per essere sicuro che non esca dalla finestra
     }
     else {
-        cout << "COlliding" << endl; //Per sicurezza in caso di collisione lo mando indietro
+        cout << "Colliding" << endl; //Per sicurezza in caso di collisione lo mando indietro
     }
 }
 
 bool GameCharacter::isColliding(float x, float y)const {  //x e y indicano lo spostamento che si vuole compiere
     int tx = (int)(posX + x*1.5)/constants::SQUARE_SIZE; //Controllo un po' più avanti rispetto alla mia posizione
     int ty = (int)(posY + y*1.5)/constants::SQUARE_SIZE;
-    if(GridNode::worldGrid[ty*constants::GRID_SIZE+tx]) //Controllo che in una casella vicina non ci sia un ostacolo e che non esca dalla finestra
+    if(GridNode::worldGrid[ty*constants::GRID_SIZE+tx] != 9) //Controllo che in una casella vicina non ci sia un ostacolo
         return false;
     else
         return true;
@@ -84,5 +88,10 @@ void GameCharacter::setInsideWindow() {  //Controlla se character è fuori dalla
     }
     else if(posY > constants::SCREEN_SIZE-temp){
         posY = constants::SCREEN_SIZE-temp;
-    }
+    } //TODO  agli angolo della finestra?
+}
+
+void GameCharacter::setNode(int x, int y) {
+    node->x = x;
+    node->y = y;
 }
