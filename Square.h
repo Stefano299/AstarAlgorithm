@@ -6,7 +6,6 @@
 #define SFML_SQUARE_H
 
 #include<SFML/Graphics.hpp>
-#include"GameSingleton.h"
 
 enum class Type{   //Enumerazione dei possibili tipo di quadrato
     Basic,

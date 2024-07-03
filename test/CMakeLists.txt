@@ -6,7 +6,6 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 set(TEST_SOURCE_FILES runAllTests.cpp
         SquareGridFixture.cpp
         SquareFixture.cpp
-        GameFixture.cpp
         NumberGridFixture.cpp
 )
 add_executable(runTests ${TEST_SOURCE_FILES})

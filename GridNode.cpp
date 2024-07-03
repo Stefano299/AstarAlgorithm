@@ -1,7 +1,6 @@
 #include "GridNode.h"
-#include"GameSingleton.h"
 
-int* GridNode::worldGrid = GameSingleton::getInstance().getNumberGridArray();
+int* GridNode::worldGrid = nullptr;
 
 int GridNode::GetGrid(int x, int y) const {   //Se una coordinata è fuori dalla griglia è come se fosse un ostacolo
     if (x < 0 ||

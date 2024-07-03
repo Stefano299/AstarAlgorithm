@@ -5,6 +5,7 @@
 #include "NumberGrid.h"
 #include "constants.h"
 #include"Square.h"
+#include"GridNode.h"
 
 NumberGrid::NumberGrid():Grid(constants::GRID_SIZE, constants::GRID_SIZE) {
     numbers = new int[constants::GRID_SIZE*constants::GRID_SIZE];  //Crea una griglia di numeri (Di stesse dimensioni di quelle del quadrato)
@@ -15,6 +16,7 @@ NumberGrid::NumberGrid():Grid(constants::GRID_SIZE, constants::GRID_SIZE) {
 
 void NumberGrid::changeElementType(int x, int y, Type type) {
     if(isValid(x, y)){
+        GridNode::worldGrid = numbers;
         if(type == Type::Basic){
             numbers[y*constants::GRID_SIZE+x] = 1; //Percorribile
         }

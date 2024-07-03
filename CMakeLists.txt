@@ -6,10 +6,6 @@ find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)
 
 add_subdirectory(test)
 set(SOURCE_FILES main.cpp
-        Game.cpp
-        Game.h
-        GameSingleton.cpp
-        GameSingleton.h
         Square.cpp
         Square.h
         SquareGrid.cpp
