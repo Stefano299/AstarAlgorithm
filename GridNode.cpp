@@ -38,7 +38,7 @@ void GridNode::PrintNodeInfo() {
 // to the Goal.
 
 float GridNode::GoalDistanceEstimate(GridNode &nodeGoal) {
-    return sqrt((float) (x - nodeGoal.x) * (x - nodeGoal.x) + (float) (y - nodeGoal.y) * (y - nodeGoal.y));
+    return sqrt( (x - nodeGoal.x) * (x - nodeGoal.x) +  (y - nodeGoal.y) * (y - nodeGoal.y));
 }
 
 bool GridNode::IsGoal(GridNode &nodeGoal) {

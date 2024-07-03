@@ -9,7 +9,9 @@
 #include"GridNode.h"
 
 class GameCharacter {
-protected:
+private:
+    bool isColliding(float x, float y) const; //Per controllare se è in collisione con un ostacolo/parete, x e y indicanno lo spostamento che si vuole compiere
+    void setInsideWindow();
     float posX;    //Posizione in pixel, NON sulla griglia
     float posY;
     int gridX;  //POSIZIONE SULLA GRIGLIA
@@ -18,7 +20,7 @@ protected:
     GridNode* node;
     sf::Sprite sprite;
 public:
-    GameCharacter(int gridX, int gridY, const sf::Texture& texture, float speed);
+    GameCharacter(int gridX, int gridY, const sf::Texture& texture, float speed, float originX = 0, float originY = 0);
     ~GameCharacter();
     void move(int x, int y);   //Si muove in una posizione INDICATA SULLA GRIGLIA
     void moveBy(float x, float y); //Si muove di x e y

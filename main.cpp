@@ -9,14 +9,20 @@
 #include"GameCharacter.h"
 
 
-void leftClick(int posX, int posY, SquareGrid& squareGrid, NumberGrid& numberGrid) {
-    int x  = posX/25;
-    int y = posY/25;
+void rightClick(int posX, int posY, SquareGrid& squareGrid, NumberGrid& numberGrid) {  //Rimuove un ostacolo in una posizioene
+    int x  = posX/constants::SQUARE_SIZE;
+    int y = posY/constants::SQUARE_SIZE;
+    squareGrid.changeElementType(x, y, Type::Basic);
+    numberGrid.changeElementType(x, y, Type::Basic);
+    std::cout << x << " " << y << std::endl;
+}
 
+
+void leftClick(int posX, int posY, SquareGrid& squareGrid, NumberGrid& numberGrid) {  //Aggiunge un ostacolo in una posizione
+    int x  = posX/constants::SQUARE_SIZE;
+    int y = posY/constants::SQUARE_SIZE;
     squareGrid.changeElementType(x, y, Type::Obstacle);
     numberGrid.changeElementType(x, y, Type::Obstacle);
-
-
     std::cout << x << " " << y << std::endl;
 }
 
@@ -34,7 +40,7 @@ bool isEqual(float a, float b){
 }
 
 bool enoughDistant(const GameCharacter& hero, const GameCharacter& enemy){
-    if(abs(hero.getPosX()-enemy.getPosX() ) > 25 || abs(hero.getPosY() -enemy.getPosY()) > 25){
+    if(abs(hero.getPosX()-enemy.getPosX() ) > 40 || abs(hero.getPosY() -enemy.getPosY()) > 40){
 
         return true;
     }
@@ -73,8 +79,8 @@ int main() {
     {
         cerr << "Impossibile caricare la texture" << endl;
     }
-    GameCharacter hero(50, 50, heroTxt, 0.4);
-    GameCharacter enemy(3, 3, enemyTxt, 6);
+    GameCharacter hero(50, 50, heroTxt, 6, (float)constants::SQUARE_SIZE/2, (float)constants::SQUARE_SIZE/2); //Voglio che l'hero abbia l'origine al centro, per gestire meglio le collisioni
+    GameCharacter enemy(3, 3, enemyTxt, 5);
     GridNode::worldGrid = numberGrid.getArray();
     sf::Event event;
     bool moving = false;
@@ -85,40 +91,35 @@ int main() {
             while (window.pollEvent(event)) {      //Loop per controllare la presenza di eventi
                 if (event.type == sf::Event::Closed)
                     window.close();
-                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {  //Aggiunge un ostacolo dove si clicca
                     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
                     leftClick(mousePos.x, mousePos.y, squareGrid, numberGrid);
 
-                }  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-                    for (int i = 0; i < constants::GRID_SIZE; i++) {
-                        for (int j = 0; j < constants::GRID_SIZE; j++) {
-                            cout << numberGrid.getNummber(j, i);
-                        }
-                        cout << endl;
-                    }
-                    newPath(count, squareGrid, path, enemy, hero, moving);
-
                 }
-
-
+                 if(sf::Mouse::isButtonPressed((sf::Mouse::Right))){  //Rimuove un ostacolo dove si è fatto click destro
+                     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+                     rightClick(mousePos.x, mousePos.y, squareGrid, numberGrid);
+                 }
             }
-
+            int dx = 0;
+            int dy = 0;
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-                hero.moveBy(0, -10);
+                dy-=1;
                 newPath(count, squareGrid, path, enemy, hero, moving);
             }
-             if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-                hero.moveBy(0, 10);
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+                dy+=1;
                 newPath(count, squareGrid, path, enemy, hero, moving);
             }
-             if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-                hero.moveBy(-10, 0);
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
+                dx-=1;
                 newPath(count, squareGrid, path, enemy, hero, moving);
             }
-             if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-                hero.moveBy(10,0 );
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
+                dx+=1;
                 newPath(count, squareGrid, path, enemy, hero, moving);
             }
+            hero.moveBy(10*dx, 10*dy);  //Faccio così per poter normalizzar il vettore spostamento nel metodo moveBy
             if(moving) {
                 enemy.move(path[count].x, path[count].y);
                 if (isEqual(enemy.getPosX(), path[count].x * constants::SQUARE_SIZE) &&
