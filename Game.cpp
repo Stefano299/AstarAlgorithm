@@ -25,28 +25,37 @@ void Game::update() {        //Game loop
 }
 
 void Game::eventCheck() {
-    while(window.isOpen()){
-        while(window.pollEvent(event)){      //Loop per controllare la presenza di eventi
-            if(event.type== sf::Event::Closed)
-                window.close();
-            else if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-                leftClick(mousePos.x, mousePos.y);
-            }
-            else if(sf::Mouse::isButtonPressed(sf::Mouse::Right)){
-                for(int i = 0; i < constants::GRID_SIZE; i++) {
-                    for (int j = 0; j < constants::GRID_SIZE; j++) {
-                        cout << numberGrid->getNummber(j, i);
+    while(window.isOpen()) {
+        try {
+            while (window.pollEvent(event)) {      //Loop per controllare la presenza di eventi
+                if (event.type == sf::Event::Closed)
+                    window.close();
+                else if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+                    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+                    leftClick(mousePos.x, mousePos.y);
+
+                } else if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
+                    for (int i = 0; i < constants::GRID_SIZE; i++) {
+                        for (int j = 0; j < constants::GRID_SIZE; j++) {
+                            cout << numberGrid->getNummber(j, i);
+                        }
+                        cout << endl;
                     }
-                    cout << endl;
+                    GridNode node;
+                    vector<sf::Vector2i> path;
+                    path = GridNode::getPath(startNode, endNode);
+                    for (auto it: path) {
+                        squareGrid->changeElementType(it.x, it.y, Type::Path);
+                    }
+
                 }
-                GridNode node;
-                vector<sf::Vector2i> path;
-                path = GridNode::getPath(startNode, endNode);
 
             }
+            update();
         }
-        update();
+        catch (out_of_range& e) {
+            cerr << e.what() << endl;
+        }
     }
 }
 
@@ -65,6 +74,7 @@ Game::~Game() {
 void Game::leftClick(int posX, int posY) {
     int x  = posX/25;
     int y = posY/25;
+
     squareGrid->changeElementType(x, y, Type::Obstacle);
     numberGrid->changeElementType(x, y, Type::Obstacle);
 
