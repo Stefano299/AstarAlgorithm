@@ -20,7 +20,8 @@ protected:
 public:
     GameCharacter(int gridX, int gridY, const sf::Texture& texture, float speed);
     ~GameCharacter();
-    void move(int gridX, int gridY);   //Si muove in una posizione INDICATA SULLA GRIGLIA
+    void move(int x, int y);   //Si muove in una posizione INDICATA SULLA GRIGLIA
+    void moveBy(float x, float y); //Si muove di x e y
     void draw(sf::RenderWindow& window) const;
     GridNode* getNode() const{return node;}
     int getGridY() const {return gridX;}

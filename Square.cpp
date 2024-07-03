@@ -5,7 +5,7 @@
 #include "Square.h"
 #include"constants.h"
 
-Square::Square(Type t): size(constants::SQUARE_SIZE), type(t) {     //Lir endo quadrati di lato 25
+Square::Square(Type t): size(constants::SQUARE_SIZE), type(t) {     //Li rendo quadrati di lato 25
     shape.setSize(sf::Vector2f(size,size));
     color = associateColor(t);//Associa il colore in base al tipo di quadrato
     shape.setFillColor(color);
@@ -22,7 +22,7 @@ sf::Color Square::associateColor(Type type) const {   //Ad ogni tipo di quadrato
         case Type::Obstacle:
             return sf::Color(128,128,128); //Grigio in RGB
         case Type::Path:
-            return sf::Color::Green;
+            return sf::Color(255, 140, 140); //rosso chiaro
         case Type::Waypoint:
             return sf::Color::Blue;
         default:

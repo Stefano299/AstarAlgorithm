@@ -6,7 +6,7 @@ protected:
     void SetUp() override {
         GridNode::worldGrid = new int[100]; // Assuming a 10x10 grid for simplicity
         for(int i = 0; i < 100; ++i) {
-            GridNode::worldGrid[i] = 0; // Initialize all cells as non-obstacles
+            GridNode::worldGrid[i] = 1; // Initialize all cells as non-obstacles
         }
     }
 

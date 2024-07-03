@@ -30,3 +30,7 @@ TEST_F(GameCharacterTest, ConstructorAndGetters) {
     EXPECT_FLOAT_EQ(character->getSpeed(), 5.0f);
 }
 
+TEST_F(GameCharacterTest, MoveBy){
+    character->moveBy(1, 0);
+    EXPECT_EQ(character->getPosX(), 5);
+}

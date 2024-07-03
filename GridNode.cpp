@@ -169,6 +169,7 @@ vector<sf::Vector2i> GridNode::getPath(GridNode &nodeStart, GridNode &nodeEnd) {
 
         } else if (SearchState == AStarSearch<GridNode>::SEARCH_STATE_FAILED) {
             cout << "Non è stato possibile trovare un percorso" << endl;
+            throw runtime_error("Percorso non trovato");
         }
         SearchCount++;
         astarsearch.EnsureMemoryFreed();

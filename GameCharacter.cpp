@@ -39,3 +39,13 @@ GameCharacter::~GameCharacter() {
 void GameCharacter::draw(sf::RenderWindow& window) const {
     window.draw(sprite);
 }
+
+void GameCharacter::moveBy(float x, float y) {
+    posX += x*speed;
+    posY += y*speed;
+    gridX = posX/constants::SQUARE_SIZE;
+    gridY = posY/constants::SQUARE_SIZE;
+    node->x = gridX;
+    node->y = gridY;
+    sprite.setPosition(posX, posY);
+}

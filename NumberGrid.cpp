@@ -21,7 +21,15 @@ void NumberGrid::changeElementType(int x, int y, Type type) {
             numbers[y*constants::GRID_SIZE+x] = 1; //Percorribile
         }
         else if(type == Type::Obstacle){
-            numbers[y*constants::GRID_SIZE+x] = 9;  //Non percorribile
+            numbers[y*constants::GRID_SIZE+x] = 9;   //Non percorribile
+            /*numbers[y*constants::GRID_SIZE+x+1] = 9;
+            numbers[y*constants::GRID_SIZE+x-1] = 9;
+            numbers[(y-1)*constants::GRID_SIZE+x] = 9;
+            numbers[(y+1)*constants::GRID_SIZE+x] = 9; //Non percorribile
+            numbers[(y-1)*constants::GRID_SIZE+x+1] = 9;
+            numbers[(y-1)*constants::GRID_SIZE+x-1] = 9;
+            numbers[(y+1)*constants::GRID_SIZE+x+1] = 9;
+            numbers[(y+1)*constants::GRID_SIZE+x-1] = 9;*/
         }
         else
             throw std::invalid_argument("Tipo di numero non valido"); //I numeri possono essere solo percorribili o non
