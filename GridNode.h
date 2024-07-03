@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <math.h>
 #include<SFML/Graphics.hpp>
-#include "stlastar.h"
+#include "astar/stlastar.h"
 #include"constants.h"
 
 using namespace std;

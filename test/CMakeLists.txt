@@ -8,6 +8,7 @@ set(TEST_SOURCE_FILES runAllTests.cpp
         SquareFixture.cpp
         NumberGridFixture.cpp
         GameCharacterFixture.cpp
+        GridNodeFixture.cpp
 )
 add_executable(runTests ${TEST_SOURCE_FILES})
 

@@ -14,8 +14,8 @@ set(SOURCE_FILES main.cpp
         constants.h
         GridNode.cpp
         GridNode.h
-        stlastar.h
-        fsa.h
+        astar/stlastar.h
+        astar/fsa.h
         Grid.h
         NumberGrid.cpp
         NumberGrid.h
