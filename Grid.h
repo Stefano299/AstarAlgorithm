@@ -1,27 +1,23 @@
 //
-// Created by stefano on 7/2/24.
+// Created by stefano on 7/3/24.
 //
 
-#ifndef SFML_GRID_H
-#define SFML_GRID_H
-#include<vector>
-#include<SFML/Graphics.hpp>
+#ifndef ASTAR_GRID_H
+#define ASTAR_GRID_H
 
 enum class Type;
-class Square;
-class Grid {
-private:
-    Square* squares;  //Griglia di quadrati (intesi come forme geometriche disegnabili)
+class Grid {    //Classe astratta per la griglia di nomi e di numeri
+protected:
+    bool isValid(int x, int y) const; //Funzione per verificare che due coordinate siano accessibili, sennò lancia un eccezione
     int width;
     int height;
 public:
-    Grid();
-    ~Grid();
-    void draw(sf::RenderWindow& window) const;
+    Grid(int w, int h):width(h), height(h){}
     int getWidth() const{return width;}
     int getHeight() const{return height;}
-    const Square& getSquare(int x, int y) const;
+    virtual void changeElementType(int x,  int y, Type type) = 0;//Metodo per cambaire il tipo di un quadrato/numero ad una certa posizione
+    virtual ~Grid() = default;
 };
 
 
-#endif //SFML_GRID_H
+#endif //ASTAR_GRID_H

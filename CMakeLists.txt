@@ -12,17 +12,20 @@ set(SOURCE_FILES main.cpp
         GameSingleton.h
         Square.cpp
         Square.h
-        Grid.cpp
-        Grid.h
+        SquareGrid.cpp
+        SquareGrid.h
         constants.h
         GridNode.cpp
         GridNode.h
         stlastar.h
-        fsa.h)
+        fsa.h
+        Grid.h
+        NumberGrid.cpp
+        NumberGrid.h
+        Grid.cpp)
 
 # Link alle librerie Astar
 add_executable(Astar ${SOURCE_FILES}
-
 )
 
 add_library(core ${SOURCE_FILES})

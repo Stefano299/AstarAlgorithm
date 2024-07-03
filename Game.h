@@ -8,9 +8,8 @@
 #include<SFML/Window.hpp>
 #include<string>
 #include<SFML/Graphics.hpp>
-#include<vector>
-#include"Grid.h"
 
+class SquareGrid;
 class Square;
 class Game {
 private:
@@ -19,10 +18,11 @@ private:
     unsigned int width;
     unsigned int height;
     std::string title;
-    Grid grid;   //Griglia che contiene i vari quadrati
+    SquareGrid* grid;   //Griglia che contiene i vari quadrati
     void update();
 public:
-    Game() = default;
+    Game();
+    ~Game();
     void eventCheck();
     void createWindow(int w, int h, const std::string& t);
     unsigned int getWidth() const{return width;}

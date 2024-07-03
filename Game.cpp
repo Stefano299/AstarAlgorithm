@@ -5,6 +5,7 @@
 #include "Game.h"
 #include"Square.h"
 #include<exception>
+#include"SquareGrid.h"
 
 void Game::createWindow(int w, int h, const std::string &t){ //Creazione (unica) finestra di gioco
     width = w;
@@ -16,7 +17,7 @@ void Game::createWindow(int w, int h, const std::string &t){ //Creazione (unica)
 
 void Game::update() {        //Game loop
     window.clear(sf::Color::Black);
-    grid.draw(window);
+    grid->draw(window);
     window.display();
 }
 
@@ -28,5 +29,13 @@ void Game::eventCheck() {
         }
         update();
     }
+}
+
+Game::Game() {
+    grid = new SquareGrid;
+}
+
+Game::~Game() {
+    delete grid;
 }
 
