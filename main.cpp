@@ -11,8 +11,8 @@
 using namespace constants;
 
 void removeObstacle(int posX, int posY, SquareGrid &squareGrid, NumberGrid &numberGrid) {  //Rimuove un ostacolo in una posizioene
-    int x = posX / constants::SQUARE_SIZE;
-    int y = posY / constants::SQUARE_SIZE;
+    int x = posX / SQUARE_SIZE;
+    int y = posY / SQUARE_SIZE;
     squareGrid.changeElementType(x, y, Type::Basic);
     numberGrid.changeElementType(x, y, Type::Basic);
     std::cout << x << " " << y << std::endl;

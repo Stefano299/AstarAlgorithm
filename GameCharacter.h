@@ -10,12 +10,11 @@
 
 class GameCharacter {
 private:
+    //TODO fare due classi separate per hero e enemy
     bool isColliding(float x, float y) const; //Per controllare se è in collisione con un ostacolo/parete, x e y indicanno lo spostamento che si vuole compiere
     void setInsideWindow();
     float posX;    //Posizione in pixel, NON sulla griglia
     float posY;
-    int gridX;  //POSIZIONE SULLA GRIGLIA
-    int gridY;
     float speed;   //TODO refactor troopi attributi
     GridNode* node;
     sf::Sprite sprite;
@@ -27,8 +26,6 @@ public:
     void moveBy(float x, float y); //Si muove di x e y
     void draw(sf::RenderWindow& window) const;
     GridNode* getNode() const{return node;}
-    int getGridY() const {return gridX;}
-    int getGridX() const {return gridX;}
     float getPosY() const {return posY;}
     float getPosX() const {return posX;}
     float getSpeed() const{return speed;}
