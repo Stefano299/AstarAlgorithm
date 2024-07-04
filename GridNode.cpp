@@ -56,71 +56,35 @@ bool GridNode::IsGoal(GridNode &nodeGoal) {
 // is done for each node internally, so here you just set the state information that
 // is specific to the application
 bool GridNode::GetSuccessors(AStarSearch<GridNode> *astarsearch, GridNode *parent_node) {
-
     int parent_x = -1;
     int parent_y = -1;
 
-    if (parent_node) {    //Controllo che il parent node esista
+    if (parent_node) {
         parent_x = parent_node->x;
         parent_y = parent_node->y;
     }
 
-
     GridNode NewNode;
 
-    // push each possible move except allowing the search to go backwards
-    if ((GetGrid(x - 1, y) < 9)
-        && !((parent_x == x - 1) && (parent_y == y))  //Per prevenire di tornare indietro
-            ) {
-        NewNode = GridNode(x - 1, y);
-        astarsearch->AddSuccessor(NewNode);
-    }
+    // Definizione delle direzioni di movimento
+    int directions[8][2] = {{-1, 0}, {0, -1}, {1, 0}, {0, 1}, {-1, -1}, {1, -1}, {1, 1}, {-1, 1}};
 
-    if ((GetGrid(x, y - 1) < 9)
-        && !((parent_x == x) && (parent_y == y - 1))
-            ) {
-        NewNode = GridNode(x, y - 1);
-        astarsearch->AddSuccessor(NewNode);
-    }
-    if ((GetGrid(x + 1, y) < 9)
-        && !((parent_x == x + 1) && (parent_y == y))
-            ) {
-        NewNode = GridNode(x + 1, y);
-        astarsearch->AddSuccessor(NewNode);
-    }
-    if ((GetGrid(x - 1, y - 1) < 9)
-        && !((parent_x == x - 1) && (parent_y == y - 1))
-            ) {
-        NewNode = GridNode(x - 1, y - 1);
-        astarsearch->AddSuccessor(NewNode);
-    }
-    if ((GetGrid(x + 1, y - 1) < 9)
-        && !((parent_x == x + 1) && (parent_y == y - 1))
-            ) {
-        NewNode = GridNode(x + 1, y - 1);
-        astarsearch->AddSuccessor(NewNode);
-    }
-    if ((GetGrid(x + 1, y + 1) < 9)
-        && !((parent_x == x + 1) && (parent_y == y + 1))
-            ) {
-        NewNode = GridNode(x + 1, y + 1);
-        astarsearch->AddSuccessor(NewNode);
-    }
+    for (auto &direction : directions) {
+        int newX = x + direction[0];
+        int newY = y + direction[1];
 
+        // Controllo per evitare di tornare indietro
+        if (newX == parent_x && newY == parent_y) continue;
 
-    if ((GetGrid(x - 1, y + 1) < 9)
-        && !((parent_x == x - 1) && (parent_y == y + 1))
-            ) {
-        NewNode = GridNode(x - 1, y + 1);
-        astarsearch->AddSuccessor(NewNode);
-    }
+        // Controllo migliorato per movimenti diagonali
+        if (abs(direction[0]) + abs(direction[1]) == 2) { // Movimento diagonale
+            if (GetGrid(x + direction[0], y) == 9 || GetGrid(x, y + direction[1]) == 9) continue; // Evita il taglio degli angoli
+        }
 
-
-    if ((GetGrid(x, y + 1) < 9)
-        && !((parent_x == x) && (parent_y == y + 1))
-            ) {
-        NewNode = GridNode(x, y + 1);
-        astarsearch->AddSuccessor(NewNode);
+        if (GetGrid(newX, newY) < 9) {
+            NewNode = GridNode(newX, newY);
+            astarsearch->AddSuccessor(NewNode);
+        }
     }
 
     return true;
