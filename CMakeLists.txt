@@ -25,6 +25,10 @@ set(SOURCE_FILES main.cpp
 
 # Link alle librerie Astar
 add_executable(Astar ${SOURCE_FILES}
+        Hero.cpp
+        Hero.h
+        Enemy.cpp
+        Enemy.h
 
 )
 

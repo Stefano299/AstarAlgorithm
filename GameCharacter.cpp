@@ -30,10 +30,6 @@ void GameCharacter::move(int x, int y) {
     float cosx = dx/hyp;
     posX += speed*cosx;
     posY += speed*senx;
-    /*if(GridNode::worldGrid[gridY*constants::GRID_SIZE+gridX] == 1){ //Evito che per errore il nodo del enemy coincida con un ostacolo...
-        node->x = gridX;
-        node->y = gridY;
-    }*/
     sprite.setPosition(posX, posY);  //SI muove un passo alla volta
 }
 
@@ -61,16 +57,34 @@ void GameCharacter::moveBy(float x, float y) {
     }
     else {
         cout << "Colliding" << endl; //Per sicurezza in caso di collisione lo mando indietro
-    }   //TODO migliorare collisioni
+    }
+}
+
+int sign(float x){
+    if(x==0)
+        return 0;
+    else if(x > 0)
+        return 1;
+    else
+        return -1;
 }
 
 bool GameCharacter::isColliding(float x, float y)const {  //x e y indicano lo spostamento che si vuole compiere
-    int tx = (int)(posX + x*15)/SQUARE_SIZE; //Controllo un po' più avanti rispetto alla mia posizione
-    int ty = (int)(posY + y*15)/SQUARE_SIZE;
-    if(GridNode::worldGrid[ty*GRID_SIZE+tx] != 9) //Controllo che in una casella vicina non ci sia un ostacolo
-        return false;
-    else
+    int fx = x*speed;  //Per quando la velocità è alta, non voglio salti un'intera casella
+    int fy = y*speed;
+    float originPos = (float)SQUARE_SIZE/2; //Posizione dell'origine rispetto al personaggio (è al centro)
+    if(fx > originPos)
+        fx = originPos;
+    if(fy > originPos)
+        fy = originPos;
+    int futureX = (int)(posX + fx +originPos*sign(x))/SQUARE_SIZE; //Controllo un po' più avanti rispetto alla mia posizione
+    int futureY = (int)(posY + fy + originPos*sign(y))/SQUARE_SIZE;
+    if(GridNode::worldGrid[futureY*GRID_SIZE+futureX] == 9) //Controllo che in una casella vicina non ci sia un ostacolo
         return true;
+    if(GridNode::worldGrid[futureY*GRID_SIZE+futureX-sign(x)] == 9 && GridNode::worldGrid[(futureY-sign(y))*GRID_SIZE+futureX] == 9) //NON PUO' PASSARE NEGLIA ANGOLI
+        return true;
+    else
+        return false;
 }  //TODO cambiare sistema di collisione
 
 void GameCharacter::setInsideWindow() {  //Controlla se character è fuori dalla finestra, se lo è, lo rimett detnro
@@ -78,15 +92,15 @@ void GameCharacter::setInsideWindow() {  //Controlla se character è fuori dalla
     if(posX < temp){
         posX = temp;
     }
-    else if(posY < temp){
+    if(posY < temp){
         posY = temp;
     }
-    else if(posX > SCREEN_SIZE-temp){
+    if(posX > SCREEN_SIZE-temp){
         posX = SCREEN_SIZE-temp;
     }
-    else if(posY > SCREEN_SIZE-temp){
+    if(posY > SCREEN_SIZE-temp){
         posY = SCREEN_SIZE-temp;
-    } //TODO  agli angolo della finestra?
+    }
 }
 
 void GameCharacter::setNode(int x, int y) {

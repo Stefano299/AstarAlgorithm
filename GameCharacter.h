@@ -9,7 +9,7 @@
 #include"GridNode.h"
 
 class GameCharacter {
-private:
+protected:
     //TODO fare due classi separate per hero e enemy
     bool isColliding(float x, float y) const; //Per controllare se è in collisione con un ostacolo/parete, x e y indicanno lo spostamento che si vuole compiere
     void setInsideWindow();

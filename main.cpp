@@ -57,8 +57,7 @@ void newPath(int &count, SquareGrid &squareGrid, vector<sf::Vector2i> &path, Gam
     }
 }
 
-void nextPathNode(const GameCharacter &hero, GameCharacter &enemy, const vector<sf::Vector2i> &path, int &count,
-                  bool &moving) {
+void nextPathNode(const GameCharacter &hero, GameCharacter &enemy, const vector<sf::Vector2i> &path, int &count, bool &moving) {
     if (moving) {
         enemy.move(path[count].x, path[count].y);
         if (isEqual(enemy.getPosX(), path[count].x * SQUARE_SIZE) &&
@@ -79,7 +78,7 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(SCREEN_SIZE, SCREEN_SIZE), "Astar", sf::Style::Titlebar |
                                                                               sf::Style::Close); // con questi parametri rendo la finestra non ridimensionabile
     window.setFramerateLimit(60);
-    GameCharacter hero(50, 25, 6, "../img/hero.png",
+    GameCharacter hero(50, 25, 8, "../img/hero.png",
                        true); //Voglio che l'hero abbia l'origine al centro, per gestire meglio le collisioni
     GameCharacter enemy(3, 25, 5, "../img/enemy.png");
     GridNode::worldGrid = numberGrid.getArray();

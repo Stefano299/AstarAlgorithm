@@ -44,7 +44,6 @@ bool GridNode::IsGoal(GridNode &nodeGoal) {
 }
 
 bool GridNode::GetSuccessors(AStarSearch<GridNode> *astarsearch, GridNode *parent_node) {
-
     int parent_x = -1;
     int parent_y = -1;
 
@@ -52,56 +51,27 @@ bool GridNode::GetSuccessors(AStarSearch<GridNode> *astarsearch, GridNode *paren
         parent_x = parent_node->x;
         parent_y = parent_node->y;
     }
-    GridNode NewNode;
-    // push each possible move except allowing the search to go backwards
-    if ((GetGrid(x - 1, y) < 9) //TODO refactor questo
-        && !((parent_x == x - 1) && (parent_y == y))  //Per prevenire di tornare indietro
-            ) {
-        NewNode = GridNode(x - 1, y);
-        astarsearch->AddSuccessor(NewNode);
-    }
 
-    if ((GetGrid(x, y - 1) < 9)
-        && !((parent_x == x) && (parent_y == y - 1))
-            ) {
-        NewNode = GridNode(x, y - 1);
-        astarsearch->AddSuccessor(NewNode);
-    }
-    if ((GetGrid(x + 1, y) < 9)
-        && !((parent_x == x + 1) && (parent_y == y))
-            ) {
-        NewNode = GridNode(x + 1, y);
-        astarsearch->AddSuccessor(NewNode);
-    }
-    if ((GetGrid(x - 1, y - 1) < 9)
-        && !((parent_x == x - 1) && (parent_y == y - 1))
-            ) {
-        NewNode = GridNode(x - 1, y - 1);
-        astarsearch->AddSuccessor(NewNode);
-    }
-    if ((GetGrid(x + 1, y - 1) < 9)
-        && !((parent_x == x + 1) && (parent_y == y - 1))
-            ) {
-        NewNode = GridNode(x + 1, y - 1);
-        astarsearch->AddSuccessor(NewNode);
-    }
-    if ((GetGrid(x + 1, y + 1) < 9)
-        && !((parent_x == x + 1) && (parent_y == y + 1))
-            ) {
-        NewNode = GridNode(x + 1, y + 1);
-        astarsearch->AddSuccessor(NewNode);
-    }
-    if ((GetGrid(x - 1, y + 1) < 9)
-        && !((parent_x == x - 1) && (parent_y == y + 1))
-            ) {
-        NewNode = GridNode(x - 1, y + 1);
-        astarsearch->AddSuccessor(NewNode);
-    }
-    if ((GetGrid(x, y + 1) < 9)
-        && !((parent_x == x) && (parent_y == y + 1))
-            ) {
-        NewNode = GridNode(x, y + 1);
-        astarsearch->AddSuccessor(NewNode);
+    GridNode NewNode;
+
+    int directions[8][2] = {{-1, 0}, {0, -1}, {1, 0}, {0, 1}, {-1, -1}, {1, -1}, {1, 1}, {-1, 1}};
+
+    for (const auto &direction : directions) {
+        int newX = x + direction[0];
+        int newY = y + direction[1];
+
+        if (newX == parent_x && newY == parent_y)
+            continue; //Per evitare torni indietro al nodo parente
+
+        if (abs(direction[0]) + abs(direction[1]) == 2) {  //per impedire movimenti diagonali tra gli angoli
+            if (GetGrid(x + direction[0], y) == 9 || GetGrid(x, y + direction[1]) == 9)
+                continue;
+        }
+
+        if (GetGrid(newX, newY) < 9) {
+            NewNode = GridNode(newX, newY);
+            astarsearch->AddSuccessor(NewNode);
+        }
     }
 
     return true;
