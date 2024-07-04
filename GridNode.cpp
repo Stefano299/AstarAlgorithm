@@ -14,36 +14,36 @@ int GridNode::GetGrid(int x, int y) const {
     return numberGrid.getNummber(x,y);
 }
 
-bool GridNode::IsSameState(GridNode &rhs) {
+bool GridNode::IsSameState(const GridNode &rhs) const{
     if((x == rhs.x) && (y == rhs.y))
         return true;
     else
         return false;
 }
 
-size_t GridNode::Hash() {
+size_t GridNode::Hash() const{
     size_t h1 = std::hash<float>{}(x);
     size_t h2 = std::hash<float>{}(y);
     return h1 ^ (h2 << 1);
 }
 
-void GridNode::PrintNodeInfo() {
+void GridNode::PrintNodeInfo() const{
     cout << "Nodo alla posizione: " << x << ", " << y << endl;
 }
 
-float GridNode::GoalDistanceEstimate(GridNode &nodeGoal) {
+float GridNode::GoalDistanceEstimate(const GridNode &nodeGoal) const{
     return sqrt((x - nodeGoal.x) * (x - nodeGoal.x) + (y - nodeGoal.y) * (y - nodeGoal.y)); //Euclidea
     //return (abs(x - nodeGoal.x) + abs(y - nodeGoal.y)); MANHATTAN
 }
 
-bool GridNode::IsGoal(GridNode &nodeGoal) {
+bool GridNode::IsGoal(const GridNode &nodeGoal) const{
     if((x == nodeGoal.x) && (y == nodeGoal.y))
         return true;
     else
         return false;
 }
 
-bool GridNode::GetSuccessors(AStarSearch<GridNode> *astarsearch, GridNode *parent_node) {
+bool GridNode::GetSuccessors(AStarSearch<GridNode> *astarsearch, GridNode *parent_node) const{
     int parent_x = -1;
     int parent_y = -1;
 
@@ -78,7 +78,7 @@ bool GridNode::GetSuccessors(AStarSearch<GridNode> *astarsearch, GridNode *paren
 }
 
 
-float GridNode::GetCost(GridNode &successor) {
+float GridNode::GetCost(const GridNode &successor) const{
     int dx = abs(x - successor.x);
     int dy = abs(y - successor.y);
     if (dx + dy == 2) { // Il costo  del movimento in diagonale è minore
@@ -88,7 +88,7 @@ float GridNode::GetCost(GridNode &successor) {
     }
 }
 
-vector<sf::Vector2i> GridNode::getPath(GridNode &nodeStart, GridNode &nodeEnd) {
+vector<sf::Vector2i> GridNode::getPath(GridNode &nodeStart,GridNode &nodeEnd){
     vector<sf::Vector2i> path;
     AStarSearch<GridNode> astarsearch;
     unsigned int SearchCount = 0;

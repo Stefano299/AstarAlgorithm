@@ -12,7 +12,8 @@
 
 using namespace constants;
 
-void removeObstacle(int posX, int posY, SquareGrid &squareGrid, NumberGrid &numberGrid) {  //Rimuove un ostacolo in una posizioene
+void removeObstacle(int posX, int posY, SquareGrid &squareGrid,
+                    NumberGrid &numberGrid) {  //Rimuove un ostacolo in una posizioene
     int x = posX / SQUARE_SIZE;
     int y = posY / SQUARE_SIZE;
     squareGrid.changeElementType(x, y, Type::Basic);
@@ -20,7 +21,8 @@ void removeObstacle(int posX, int posY, SquareGrid &squareGrid, NumberGrid &numb
     std::cout << x << " " << y << std::endl;
 }
 
-void addObstacle(int posX, int posY, SquareGrid &squareGrid, NumberGrid &numberGrid) {  //Aggiunge un ostacolo in una posizione
+void addObstacle(int posX, int posY, SquareGrid &squareGrid,
+                 NumberGrid &numberGrid) {  //Aggiunge un ostacolo in una posizione
     int x = posX / SQUARE_SIZE;
     int y = posY / SQUARE_SIZE;
     squareGrid.changeElementType(x, y, Type::Obstacle);
@@ -28,7 +30,8 @@ void addObstacle(int posX, int posY, SquareGrid &squareGrid, NumberGrid &numberG
     std::cout << x << " " << y << std::endl;
 }
 
-void update(sf::RenderWindow &window, const SquareGrid &squareGrid, const GameCharacter &hero, const GameCharacter &enemy) {        //Game loop
+void update(sf::RenderWindow &window, const SquareGrid &squareGrid, const GameCharacter &hero,
+            const GameCharacter &enemy) {        //Game loop
     window.clear(sf::Color::White);
     squareGrid.draw(window);
     hero.draw(window);
@@ -37,20 +40,22 @@ void update(sf::RenderWindow &window, const SquareGrid &squareGrid, const GameCh
 }
 
 bool isEqual(float a, float b) {  //NON voglio sapere quando i miei personaggi sono ESATTAMENTE vicini
-    if (abs(a - b) < (float)SQUARE_SIZE/2)
+    if (abs(a - b) < (float) SQUARE_SIZE / 2)
         return true;
     else
         return false;
 }
 
 bool isEnoughDistant(const GameCharacter &hero, const GameCharacter &enemy) {
-    if (abs(hero.getPosX() - enemy.getPosX()) > SQUARE_SIZE*2 || abs(hero.getPosY() - enemy.getPosY()) > SQUARE_SIZE*2) {
+    if (abs(hero.getPosX() - enemy.getPosX()) > SQUARE_SIZE * 2 ||
+        abs(hero.getPosY() - enemy.getPosY()) > SQUARE_SIZE * 2) {
         return true;
     } else
         return false;
 }
 
-void newPath(int &count, SquareGrid &squareGrid, vector<sf::Vector2i> &path, GameCharacter &enemy, GameCharacter &hero, bool &moving) {
+void newPath(int &count, SquareGrid &squareGrid, vector<sf::Vector2i> &path, GameCharacter &enemy, GameCharacter &hero,
+             bool &moving) {
     path = GridNode::getPath(*enemy.getNode(), *hero.getNode());
     count = 0;  //Count = 0 perchè deve cercare una nuova path
     squareGrid.reset();
@@ -59,32 +64,31 @@ void newPath(int &count, SquareGrid &squareGrid, vector<sf::Vector2i> &path, Gam
     }
 }
 
-void nextPathNode(const GameCharacter &hero, GameCharacter &enemy, const vector<sf::Vector2i> &path, int &count, bool &moving) {
-    if (moving) {
-        enemy.move(path[count].x, path[count].y);
-        if (isEqual(enemy.getPosX(), path[count].x * SQUARE_SIZE) &&
-            isEqual(enemy.getPosY(), path[count].y * SQUARE_SIZE) &&
-                isEnoughDistant(hero, enemy) && count < path.size()) {
-            enemy.setNode(path[count].x, path[count].y);  //Aggiorno il nodo dell'enemy (che sarà il successivo start node)
-            cout << "change" << endl;
-            count++;
-            cout << count << endl;
-        } else if (!isEnoughDistant(hero, enemy))
-            moving = false;
-    }
-}  //TODO migliorare questo metodo
+void nextPathNode(const GameCharacter &hero, GameCharacter &enemy, const vector<sf::Vector2i> &path, int &count,
+                  bool &moving) {
+    if (isEqual(enemy.getPosX(), path[count].x * SQUARE_SIZE) &&
+        isEqual(enemy.getPosY(), path[count].y * SQUARE_SIZE) &&
+        isEnoughDistant(hero, enemy) && count < path.size()) {
+        enemy.setNode(path[count].x, path[count].y);  //Aggiorno il nodo dell'enemy (che sarà il successivo start node)
+        cout << "change" << endl;
+        count++;
+        cout << count << endl;
+    } else if (!isEnoughDistant(hero, enemy))
+        moving = false;
+}
 
 int main() {
     SquareGrid squareGrid;
     sf::RenderWindow window(sf::VideoMode(SCREEN_SIZE, SCREEN_SIZE), "Astar", sf::Style::Titlebar |
                                                                               sf::Style::Close); // con questi parametri rendo la finestra non ridimensionabile
     window.setFramerateLimit(60);
-    Hero hero(1300, 700, 8, "../img/hero.png"); //Voglio che l'hero abbia l'origine al centro, per gestire meglio le collisioni
+    Hero hero(1300, 700, 8,
+              "../img/hero.png"); //Voglio che l'hero abbia l'origine al centro, per gestire meglio le collisioni
     Enemy enemy(70, 700, 5, "../img/enemy.png");
     //GridNode::worldGrid = numberGrid.getArray();
     vector<sf::Vector2i> path;
     int count;
-    bool moving = false;
+    bool enemyMoving = false;   //Se l'enemy si muove
     while (window.isOpen()) {
         sf::Event event;
         try {
@@ -122,21 +126,26 @@ int main() {
                 makePath = true;
             }
             if (makePath) { //MakePath è = 1 se hero si è mosso, e c'è quindi bisogno di creare un nuovo percorso
-                if (isEnoughDistant(hero, enemy)) {      //La nuova path viene calcolata solo se l'eroe e il nemico sono sufficientemente distanti
+                if (isEnoughDistant(hero,
+                                    enemy)) {      //La nuova path viene calcolata solo se l'eroe e il nemico sono sufficientemente distanti
                     try {
-                        newPath(count, squareGrid, path, enemy, hero, moving);
-                        moving = true;
+                        newPath(count, squareGrid, path, enemy, hero, enemyMoving);
+                        enemyMoving = true;
                     } catch (
                             runtime_error &e) {     //Se non trova un percorso si ferma ma hero si può continuare a muovere
                         cout << e.what() << endl;
                         //L'enemy continua a seguire l'ultimo percorso trovato in caso abbia trovato e poi "perso" il personaggio
                     } //TODO crearla solo se cambia pos sulla griglia
                 } else {
-                    moving = false;
+                    enemyMoving = false;
                 }
             }
             hero.move(dx, dy);  //Faccio così per poter normalizzar il vettore spostamento nel metodo moveBy
-            nextPathNode(hero, enemy, path, count, moving);
+            if (enemyMoving) {
+                enemy.move(path[count].x, path[count].y);
+                nextPathNode(hero, enemy, path, count,
+                             enemyMoving); //controlla se è necessario che l'enemy vada al nodo successivo del suo percorso, in caso lo fa
+            }
             update(window, squareGrid, hero, enemy);
         }
         catch (out_of_range &e) {

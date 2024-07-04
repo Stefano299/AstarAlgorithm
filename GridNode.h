@@ -20,19 +20,19 @@ private:
     int GetGrid(int x, int y) const; //Se una coordinata è fuori dalla griglia è come se fosse un ostacolo
 public:
     int x; // the (x,y) positions of the node
-    int y;
+    int y; //TODO renderli privati
     //static int* worldGrid; //La griglia che indica dove sono gli ostacoli
     static NumberGrid numberGrid;
     GridNode(): x(0), y(0){}
     GridNode(int px, int py) : x(px), y(py){}
-    float GoalDistanceEstimate(GridNode &nodeGoal);
-    bool IsGoal(GridNode &nodeGoal);
-    bool GetSuccessors(AStarSearch<GridNode> *astarsearch, GridNode *parent_node);
-    float GetCost(GridNode &successor);
-    bool IsSameState(GridNode &rhs);
-    size_t Hash();
-    static vector<sf::Vector2i> getPath(GridNode &nodeStart, GridNode &nodeEnd);
-    void PrintNodeInfo();
+    float GoalDistanceEstimate(const GridNode &nodeGoal) const;
+    bool IsGoal(const GridNode &nodeGoal) const;
+    bool GetSuccessors(AStarSearch<GridNode> *astarsearch, GridNode *parent_node) const;
+    float GetCost(const GridNode &successor) const;
+    bool IsSameState(const GridNode &rhs) const;
+    size_t Hash() const;
+    void PrintNodeInfo() const;
+    static vector<sf::Vector2i> getPath(GridNode &nodeStart,GridNode &nodeEnd);
 };
 
 
