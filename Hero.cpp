@@ -46,9 +46,9 @@ bool Hero::isColliding(float x, float y)const {  //x e y indicano lo spostamento
         fy = originPos;
     int futureX = (int)(posX + fx +originPos*sign(x))/SQUARE_SIZE; //Controllo un po' più avanti rispetto alla mia posizione
     int futureY = (int)(posY + fy + originPos*sign(y))/SQUARE_SIZE;
-    if(GridNode::worldGrid[futureY*GRID_SIZE+futureX] == 9) //Controllo che in una casella vicina non ci sia un ostacolo
+    if(GridNode::numberGrid.getNummber(futureX, futureY) == 9) //Controllo che in una casella vicina non ci sia un ostacolo
         return true;
-    if(GridNode::worldGrid[futureY*GRID_SIZE+futureX-sign(x)] == 9 && GridNode::worldGrid[(futureY-sign(y))*GRID_SIZE+futureX] == 9) //NON PUO' PASSARE NEGLIA ANGOLI
+    if(GridNode::numberGrid.getNummber(futureX-sign(x), futureY) == 9 && GridNode::numberGrid.getNummber(futureX, futureY-sign(y))) //NON PUO' PASSARE NEGLIA ANGOLI
         return true;
     else
         return false;

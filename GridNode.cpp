@@ -5,13 +5,13 @@
 
 using namespace std;
 
-int* GridNode::worldGrid = nullptr;
+NumberGrid GridNode::numberGrid;
 
 int GridNode::GetGrid(int x, int y) const {
     if (x < 0 || x >= constants::GRID_SIZE || y < 0 || y >= constants::GRID_SIZE) {
         return 9;
     }
-    return worldGrid[(y * constants::GRID_SIZE) + x];
+    return numberGrid.getNummber(x,y);
 }
 
 bool GridNode::IsSameState(GridNode &rhs) {

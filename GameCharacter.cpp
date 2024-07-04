@@ -6,18 +6,18 @@
 #include "constants.h"
 using namespace constants;
 
-GameCharacter::GameCharacter(int gridX, int gridY, float speed,  const string& txtPath, bool centerOrigin) {
+GameCharacter::GameCharacter(float x, float y, float speed,  const string& txtPath, bool centerOrigin) {
     if (!texture.loadFromFile(txtPath)) {
         cerr << "Impossibile caricare texture" << endl;
     }
     this->speed = speed;
-    posX = gridX*SQUARE_SIZE;
-    posY = gridY*SQUARE_SIZE;
+    posX = x;
+    posY = y;
     sprite.setTexture(texture);
     sprite.setPosition(posX, posY);
     if(centerOrigin)
         sprite.setOrigin((float)SQUARE_SIZE/2, (float)SQUARE_SIZE/2); //L'origine dello sprite: da dove si controlla
-    node = new GridNode(gridX, gridY); //Lo posizione sulla griglia
+    node = new GridNode(x/SQUARE_SIZE, y/SQUARE_SIZE); //Lo posizione sulla griglia
 }
 
 GameCharacter::~GameCharacter() {

@@ -18,7 +18,7 @@ protected:
     sf::Sprite sprite;
     sf::Texture texture;
 public:
-    GameCharacter(int gridX, int gridYfloat, float speed, const string& txtPath, bool centerOrigin = false);
+    GameCharacter(float x, float y, float speed, const string& txtPath, bool centerOrigin = false);
     virtual ~GameCharacter();
     virtual void move(float x, float y) = 0;   //Si muove in una posizione INDICATA SULLA GRIGLIA
     void draw(sf::RenderWindow& window) const;

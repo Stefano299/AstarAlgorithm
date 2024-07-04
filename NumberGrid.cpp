@@ -7,29 +7,23 @@
 #include"Square.h"
 #include"GridNode.h"
 
-NumberGrid::NumberGrid():Grid(constants::GRID_SIZE, constants::GRID_SIZE) {
-    numbers = new int[constants::GRID_SIZE*constants::GRID_SIZE];  //Crea una griglia di numeri (Di stesse dimensioni di quelle del quadrato)
-    for(int i = 0; i < constants::GRID_SIZE*constants::GRID_SIZE; i++){
+using namespace constants;
+
+NumberGrid::NumberGrid():Grid(GRID_SIZE, GRID_SIZE) {
+    numbers = new int[GRID_SIZE*GRID_SIZE];  //Crea una griglia di numeri (Di stesse dimensioni di quelle del quadrato)
+    for(int i = 0; i < GRID_SIZE*GRID_SIZE; i++){
         numbers[i] = 1; //1 significa percorribile
     }
 }
 
 void NumberGrid::changeElementType(int x, int y, Type type) {
     if(isValid(x, y)){
-        GridNode::worldGrid = numbers;
+        //GridNode::worldGrid = numbers;
         if(type == Type::Basic){
-            numbers[y*constants::GRID_SIZE+x] = 1; //Percorribile
+            numbers[y*GRID_SIZE+x] = 1; //Percorribile
         }
         else if(type == Type::Obstacle){
-            numbers[y*constants::GRID_SIZE+x] = 9;   //Non percorribile
-            /*numbers[y*constants::GRID_SIZE+x+1] = 9;
-            numbers[y*constants::GRID_SIZE+x-1] = 9;
-            numbers[(y-1)*constants::GRID_SIZE+x] = 9;
-            numbers[(y+1)*constants::GRID_SIZE+x] = 9; //Non percorribile
-            numbers[(y-1)*constants::GRID_SIZE+x+1] = 9;
-            numbers[(y-1)*constants::GRID_SIZE+x-1] = 9;
-            numbers[(y+1)*constants::GRID_SIZE+x+1] = 9;
-            numbers[(y+1)*constants::GRID_SIZE+x-1] = 9;*/
+            numbers[y*GRID_SIZE+x] = 9;
         }
         else
             throw std::invalid_argument("Tipo di numero non valido"); //I numeri possono essere solo percorribili o non
@@ -42,7 +36,7 @@ NumberGrid::~NumberGrid() {
 
 int NumberGrid::getNummber(int x, int y) const {
     if(isValid(x, y))
-        return numbers[y*constants::GRID_SIZE+x];
+        return numbers[y*GRID_SIZE+x];
     else
         throw std::out_of_range("Coordinate del numero non valide");
 }

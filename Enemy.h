@@ -9,7 +9,7 @@
 
 class Enemy: public GameCharacter {
 public:
-    Enemy(int gridX, int gridY, float speed, const string& txtPath):  GameCharacter(gridX, gridY, speed, txtPath, false){}
+    Enemy(float x, float y, float speed, const string& txtPath):  GameCharacter(x, y, speed, txtPath, false){}
     void move(float x, float y) override;
 };
 

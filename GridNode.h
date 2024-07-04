@@ -11,6 +11,7 @@
 #include<SFML/Graphics.hpp>
 #include "astar/stlastar.h"
 #include"constants.h"
+#include "NumberGrid.h"
 
 using namespace std;
 
@@ -20,7 +21,8 @@ private:
 public:
     int x; // the (x,y) positions of the node
     int y;
-    static int* worldGrid; //La griglia che indica dove sono gli ostacoli
+    //static int* worldGrid; //La griglia che indica dove sono gli ostacoli
+    static NumberGrid numberGrid;
     GridNode(): x(0), y(0){}
     GridNode(int px, int py) : x(px), y(py){}
     float GoalDistanceEstimate(GridNode &nodeGoal);

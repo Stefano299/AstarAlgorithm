@@ -5,7 +5,9 @@
 #include "Square.h"
 #include"constants.h"
 
-Square::Square(Type t): size(constants::SQUARE_SIZE), type(t) {     //Li rendo quadrati di lato 25
+using namespace constants;
+
+Square::Square(Type t): size(SQUARE_SIZE), type(t) {     //Li rendo quadrati di lato 25
     shape.setSize(sf::Vector2f(size,size));
     color = associateColor(t);//Associa il colore in base al tipo di quadrato
     shape.setFillColor(color);
@@ -40,8 +42,8 @@ Type Square::getType() const {
 }
 
 void Square::setPos(int x, int y) {     //La x e la y indicano le coordinate nella griglia, ma col metodo setPosition inserisco la posizione nella finestra di gioco
-    if(x>=0 && x < constants::GRID_SIZE && y >= 0 && y < constants::GRID_SIZE){
-        shape.setPosition(x*constants::SQUARE_SIZE, y*constants::SQUARE_SIZE);
+    if(x>=0 && x < GRID_SIZE && y >= 0 && y < GRID_SIZE){
+        shape.setPosition(x*SQUARE_SIZE, y*SQUARE_SIZE);
         this->x = x;
         this->y = y;
     }
