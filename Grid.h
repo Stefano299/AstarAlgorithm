@@ -8,7 +8,7 @@
 enum class Type;
 class Grid {    //Classe astratta per la griglia di nomi e di numeri
 protected:
-    bool isValid(int x, int y) const; //Funzione per verificare che due coordinate siano accessibili, sennò lancia un eccezione
+    bool isValid(int x, int y) const; //Funzione per verificare che due coordinate siano accessibili (Dentro una finestra)
     int width;
     int height;
 public:

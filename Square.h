@@ -11,7 +11,6 @@ enum class Type{   //Enumerazione dei possibili tipo di quadrato
     Basic,
     Obstacle,
     Path,
-    Waypoint,
 };
 
 class Square {

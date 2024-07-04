@@ -23,10 +23,9 @@ sf::Color Square::associateColor(Type type) const {   //Ad ogni tipo di quadrato
             return sf::Color(128,128,128); //Grigio in RGB
         case Type::Path:
             return sf::Color(255, 140, 140); //rosso chiaro
-        case Type::Waypoint:
-            return sf::Color::Blue;
         default:
-            throw std::invalid_argument("Tipo non esistente"); //Ci sono solo 4 tipi...
+            throw std::invalid_argument("Tipo non esistente"); //Ci sono solo 4 tipi...,
+            //TODO gestire eccezione
     }
 }
 

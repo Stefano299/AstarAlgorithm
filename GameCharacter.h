@@ -16,7 +16,7 @@ private:
     float posY;
     int gridX;  //POSIZIONE SULLA GRIGLIA
     int gridY;
-    float speed;
+    float speed;   //TODO refactor troopi attributi
     GridNode* node;
     sf::Sprite sprite;
 public:

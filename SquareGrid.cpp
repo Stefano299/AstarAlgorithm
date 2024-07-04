@@ -43,7 +43,7 @@ void SquareGrid::changeElementType(int x, int y, Type type) {
         throw std::out_of_range("Coordinate del quadrato non valide");
 }
 
-void SquareGrid::reset() {
+void SquareGrid::reset() {  //Riporta i blocchi allo stato iniziale (Baic)
     for(int i = 0; i < constants::GRID_SIZE*constants::GRID_SIZE; i++){
         if(squares[i].getType()==Type::Path){
             squares[i].setType(Type::Basic);

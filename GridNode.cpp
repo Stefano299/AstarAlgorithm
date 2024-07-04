@@ -54,7 +54,7 @@ bool GridNode::GetSuccessors(AStarSearch<GridNode> *astarsearch, GridNode *paren
     }
     GridNode NewNode;
     // push each possible move except allowing the search to go backwards
-    if ((GetGrid(x - 1, y) < 9)
+    if ((GetGrid(x - 1, y) < 9) //TODO refactor questo
         && !((parent_x == x - 1) && (parent_y == y))  //Per prevenire di tornare indietro
             ) {
         NewNode = GridNode(x - 1, y);
