@@ -18,9 +18,7 @@ void rightClick(int posX, int posY, SquareGrid &squareGrid,
     std::cout << x << " " << y << std::endl;
 }
 
-
-void
-leftClick(int posX, int posY, SquareGrid &squareGrid, NumberGrid &numberGrid) {  //Aggiunge un ostacolo in una posizione
+void leftClick(int posX, int posY, SquareGrid &squareGrid, NumberGrid &numberGrid) {  //Aggiunge un ostacolo in una posizione
     int x = posX / constants::SQUARE_SIZE;
     int y = posY / constants::SQUARE_SIZE;
     squareGrid.changeElementType(x, y, Type::Obstacle);
@@ -51,9 +49,9 @@ bool enoughDistant(const GameCharacter &hero, const GameCharacter &enemy) {
 void newPath(int &count, SquareGrid &squareGrid, vector<sf::Vector2i> &path, GameCharacter &enemy, GameCharacter &hero,
              bool &moving) {
     if (enoughDistant(hero, enemy)) {
+        path = GridNode::getPath(*enemy.getNode(), *hero.getNode());
         count = 0;
         squareGrid.reset();
-        path = GridNode::getPath(*enemy.getNode(), *hero.getNode());
         for (auto it: path) {
             squareGrid.changeElementType(it.x, it.y, Type::Path);
         }
@@ -126,8 +124,8 @@ int main() {
                 try {
                     newPath(count, squareGrid, path, enemy, hero, moving);
                 }catch(runtime_error& e){     //Se non trova un percorso si ferma ma hero si può continuare a muovere
-                    cout << e.what() << endl;
-                    moving = false;
+                    cout << e.what() << endl;   //L'enemy continua a seguire l'ultimo percorso trovato in caso abbia trovato e poi "perso" il personaggio
+                    //moving = false;
                 }
             }
             hero.moveBy(10 * dx,
@@ -136,7 +134,7 @@ int main() {
                 enemy.move(path[count].x, path[count].y);
                 if (isEqual(enemy.getPosX(), path[count].x * constants::SQUARE_SIZE) &&
                     isEqual(enemy.getPosY(), path[count].y * constants::SQUARE_SIZE) &&
-                    enoughDistant(hero, enemy)) {
+                    enoughDistant(hero, enemy)  && count < path.size()) {
                     enemy.setNode(path[count].x,
                                   path[count].y);  //Aggiorno il nodo dell'enemy (che sarà il successivo start node)
                     cout << "change" << endl;
