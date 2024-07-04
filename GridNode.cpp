@@ -60,7 +60,7 @@ bool GridNode::GetSuccessors(AStarSearch<GridNode> *astarsearch, GridNode *paren
     int parent_x = -1;
     int parent_y = -1;
 
-    if (parent_node) {
+    if (parent_node) {    //Controllo che il parent node esista
         parent_x = parent_node->x;
         parent_y = parent_node->y;
     }
@@ -70,7 +70,7 @@ bool GridNode::GetSuccessors(AStarSearch<GridNode> *astarsearch, GridNode *paren
 
     // push each possible move except allowing the search to go backwards
     if ((GetGrid(x - 1, y) < 9)
-        && !((parent_x == x - 1) && (parent_y == y))
+        && !((parent_x == x - 1) && (parent_y == y))  //Per prevenire di tornare indietro
             ) {
         NewNode = GridNode(x - 1, y);
         astarsearch->AddSuccessor(NewNode);
@@ -131,8 +131,13 @@ bool GridNode::GetSuccessors(AStarSearch<GridNode> *astarsearch, GridNode *paren
 // conceptually where we're moving
 
 float GridNode::GetCost(GridNode &successor) {
-    return (float) GetGrid(x, y);
-
+    int dx = abs(x - successor.x);
+    int dy = abs(y - successor.y);
+    if (dx + dy == 2) { // Movimento in diagonale
+        return sqrt(2);
+    } else { // Movimento ortogonale
+        return 1;
+    }
 }
 
 vector<sf::Vector2i> GridNode::getPath(GridNode &nodeStart, GridNode &nodeEnd) {
