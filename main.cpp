@@ -7,6 +7,8 @@
 #include "SquareGrid.h"
 #include"GridNode.h"
 #include"GameCharacter.h"
+#include"Hero.h"
+#include"Enemy.h"
 
 using namespace constants;
 
@@ -78,9 +80,8 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(SCREEN_SIZE, SCREEN_SIZE), "Astar", sf::Style::Titlebar |
                                                                               sf::Style::Close); // con questi parametri rendo la finestra non ridimensionabile
     window.setFramerateLimit(60);
-    GameCharacter hero(50, 25, 8, "../img/hero.png",
-                       true); //Voglio che l'hero abbia l'origine al centro, per gestire meglio le collisioni
-    GameCharacter enemy(3, 25, 5, "../img/enemy.png");
+    Hero hero(50, 25, 8, "../img/hero.png"); //Voglio che l'hero abbia l'origine al centro, per gestire meglio le collisioni
+    Enemy enemy(3, 25, 5, "../img/enemy.png");
     GridNode::worldGrid = numberGrid.getArray();
     vector<sf::Vector2i> path;
     int count;
@@ -135,7 +136,7 @@ int main() {
                     moving = false;
                 }
             }
-            hero.moveBy(dx, dy);  //Faccio così per poter normalizzar il vettore spostamento nel metodo moveBy
+            hero.move(dx, dy);  //Faccio così per poter normalizzar il vettore spostamento nel metodo moveBy
             nextPathNode(hero, enemy, path, count, moving);
             update(window, squareGrid, hero, enemy);
         }

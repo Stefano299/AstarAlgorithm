@@ -11,8 +11,6 @@
 class GameCharacter {
 protected:
     //TODO fare due classi separate per hero e enemy
-    bool isColliding(float x, float y) const; //Per controllare se è in collisione con un ostacolo/parete, x e y indicanno lo spostamento che si vuole compiere
-    void setInsideWindow();
     float posX;    //Posizione in pixel, NON sulla griglia
     float posY;
     float speed;   //TODO refactor troopi attributi
@@ -21,9 +19,8 @@ protected:
     sf::Texture texture;
 public:
     GameCharacter(int gridX, int gridYfloat, float speed, const string& txtPath, bool centerOrigin = false);
-    ~GameCharacter();
-    void move(int x, int y);   //Si muove in una posizione INDICATA SULLA GRIGLIA
-    void moveBy(float x, float y); //Si muove di x e y
+    virtual ~GameCharacter();
+    virtual void move(float x, float y) = 0;   //Si muove in una posizione INDICATA SULLA GRIGLIA
     void draw(sf::RenderWindow& window) const;
     GridNode* getNode() const{return node;}
     float getPosY() const {return posY;}
