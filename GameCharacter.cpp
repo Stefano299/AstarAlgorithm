@@ -5,7 +5,10 @@
 #include "GameCharacter.h"
 #include "constants.h"
 
-GameCharacter::GameCharacter(int gridX, int gridY, const sf::Texture& texture, float speed, bool centerOrigin) {
+GameCharacter::GameCharacter(int gridX, int gridY, float speed,  const string& txtPath, bool centerOrigin) {
+    if (!texture.loadFromFile(txtPath)) {
+        cerr << "Impossibile caricare texture" << endl;
+    }
     this->speed = speed;
     this->gridX = gridX;
     this->gridY = gridY;
@@ -58,22 +61,22 @@ void GameCharacter::moveBy(float x, float y) {
         gridY = posY/constants::SQUARE_SIZE;
         node->x = gridX;
         node->y = gridY;
+        setInsideWindow();//Per essere sicuro che non esca dalla finestra
         sprite.setPosition(posX, posY);
-        setInsideWindow(); //Per essere sicuro che non esca dalla finestra
     }
     else {
         cout << "Colliding" << endl; //Per sicurezza in caso di collisione lo mando indietro
-    }
+    }   //TODO migliorare collisioni
 }
 
 bool GameCharacter::isColliding(float x, float y)const {  //x e y indicano lo spostamento che si vuole compiere
-    int tx = (int)(posX + x*1.5)/constants::SQUARE_SIZE; //Controllo un po' più avanti rispetto alla mia posizione
-    int ty = (int)(posY + y*1.5)/constants::SQUARE_SIZE;
+    int tx = (int)(posX + x*15)/constants::SQUARE_SIZE; //Controllo un po' più avanti rispetto alla mia posizione
+    int ty = (int)(posY + y*15)/constants::SQUARE_SIZE;
     if(GridNode::worldGrid[ty*constants::GRID_SIZE+tx] != 9) //Controllo che in una casella vicina non ci sia un ostacolo
         return false;
     else
         return true;
-}
+}  //TODO cambiare sistema di collisione
 
 void GameCharacter::setInsideWindow() {  //Controlla se character è fuori dalla finestra, se lo è, lo rimett detnro
     float temp = (float)constants::SQUARE_SIZE/2;

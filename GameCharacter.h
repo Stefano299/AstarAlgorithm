@@ -19,8 +19,9 @@ private:
     float speed;   //TODO refactor troopi attributi
     GridNode* node;
     sf::Sprite sprite;
+    sf::Texture texture;
 public:
-    GameCharacter(int gridX, int gridY, const sf::Texture& texture, float speed, bool centerOrigin = false);
+    GameCharacter(int gridX, int gridYfloat, float speed, const string& txtPath, bool centerOrigin = false);
     ~GameCharacter();
     void move(int x, int y);   //Si muove in una posizione INDICATA SULLA GRIGLIA
     void moveBy(float x, float y); //Si muove di x e y
