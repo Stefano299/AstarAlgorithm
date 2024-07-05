@@ -12,7 +12,7 @@ GameCharacter::GameCharacter(float x, float y, float speed,  const string& txtPa
     if (!texture.loadFromFile(txtPath)) {
         throw failed_character_init("Impossibile caricare texture");
     }
-    if(x >= SCREEN_WIDTH || x<0 || y <0 || y >= SCREEN_HEGIHT){  //Non voglio venga messo fuori dalla finestra
+    if(x >= SCREEN_WIDTH || x<0 || y <0 || y >= SCREEN_HEIGHT){  //Non voglio venga messo fuori dalla finestra
         throw failed_character_init("Coordinate del personaggio non valide");
     }
     this->speed = speed;

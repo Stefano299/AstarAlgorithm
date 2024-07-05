@@ -29,7 +29,7 @@ TEST_F(HeroTest, MovesToNewPosition) {
 
 
 TEST_F(HeroTest, MoveReturnFalse) {
-    bool result = hero->move(constants::SCREEN_HEGIHT+10.0f, constants::SCREEN_WIDTH+10.f); //C'è una collisione
+    bool result = hero->move(constants::SCREEN_HEIGHT + 10.0f, constants::SCREEN_WIDTH + 10.f); //C'è una collisione
     ASSERT_FALSE(result);
 }
 
