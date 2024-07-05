@@ -7,11 +7,28 @@
 #include"constants.h"
 
 using namespace std;
+using namespace constants;
 
 NumberGrid GridNode::numberGrid(constants::GRID_WIDTH, constants::GRID_HEIGHT);
 
+
+void GridNode::setX(int x) {
+    if(x >= 0 && x < GRID_WIDTH)
+        this->x =  x;
+    else
+        throw invalid_coordinates("Coordiante del nodo invalide");
+}
+
+void GridNode::setY(int y) {
+    if(y >= 0 && y < GRID_HEIGHT)
+        this->y =  y;
+    else
+        throw invalid_coordinates("Coordiante del nodo invalide");
+}
+
+
 int GridNode::GetGrid(int x, int y) const {
-    if (x < 0 || x >= constants::GRID_WIDTH || y < 0 || y >= constants::GRID_HEIGHT) {
+    if (x < 0 || x >= GRID_WIDTH || y < 0 || y >= GRID_HEIGHT) {
         return 9;
     }
     return numberGrid.getNumber(x,y);
@@ -129,3 +146,4 @@ vector<sf::Vector2i> GridNode::getPath(GridNode &nodeStart,GridNode &nodeEnd){
     }
     return path;
 }
+

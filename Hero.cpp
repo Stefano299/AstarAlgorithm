@@ -30,9 +30,9 @@ bool Hero::move(float x, float y) {
         int newNodeY = posY/SQUARE_SIZE;
         //setInsideWindow();//Per essere sicuro che non esca dalla finestra
         sprite.setPosition(posX, posY);
-        if(node->x != newNodeX || node->y != newNodeY){  //Ritorna vero se le coordinate del nodo sono cambiate
-            node->x = newNodeX;
-            node->y = newNodeY;
+        if(node.getX() != newNodeX || node.getY() != newNodeY){  //Ritorna vero se le coordinate del nodo sono cambiate
+            node.setX(newNodeX);
+            node.setY(newNodeY);
             return true;
         }
         else

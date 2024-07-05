@@ -18,14 +18,19 @@ using namespace std;
 
 class GridNode {   //Classe che rappresenta un nodo della mia griglia
 private:
+    int x;
+    int y;
     int GetGrid(int x, int y) const; //Se una coordinata è fuori dalla griglia è come se fosse un ostacolo
 public:
-    int x; // the (x,y) positions of the node
-    int y; //TODO renderli privati
+    //TODO renderli privati
     //static int* worldGrid; //La griglia che indica dove sono gli ostacoli
     static NumberGrid numberGrid;
     GridNode(): x(0), y(0){}
     GridNode(int px, int py) : x(px), y(py){}
+    void setX(int x);
+    void setY(int y);
+    int getX() const{return x;}
+    int getY() const{return y;}
     float GoalDistanceEstimate(const GridNode &nodeGoal) const;
     bool IsGoal(const GridNode &nodeGoal) const;
     bool GetSuccessors(AStarSearch<GridNode> *astarsearch, GridNode *parent_node) const;

@@ -55,7 +55,9 @@ bool isEnoughDistant(const GameCharacter &hero, const GameCharacter &enemy) {
 
 vector<sf::Vector2i> newPath(int &count, SquareGrid &squareGrid, GameCharacter &enemy, GameCharacter &hero,
              bool &moving) {
-    vector<sf::Vector2i> path = GridNode::getPath(*enemy.getNode(), *hero.getNode());
+    GridNode heroNode = hero.getNode();
+    GridNode enemyNode = enemy.getNode();
+    vector<sf::Vector2i> path = GridNode::getPath(enemyNode, heroNode);
     count = 0;  //Count = 0 perchè deve cercare una nuova path
     squareGrid.reset();  //Rimuovo il disegno della vecchia path
     for (auto it: path) {
