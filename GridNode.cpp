@@ -80,12 +80,12 @@ bool GridNode::GetSuccessors(AStarSearch<GridNode> *astarsearch, GridNode *paren
         int newX = x + direction[0];
         int newY = y + direction[1];
 
-        if (abs(direction[0]) + abs(direction[1]) == 2) {  //per impedire movimenti diagonali tra gli angoli
+        if (abs(direction[0]) + abs(direction[1]) == 2) {  //per impedire movimenti diagonali tra gli angoli d ostacoli
             if (GetGrid(x + direction[0], y) == 9 || GetGrid(x, y + direction[1]) == 9)
                 continue;
         }
         if ((GetGrid(newX, newY) < 9)
-            && !((parent_x == newX) && (parent_y == newY))
+            && !((parent_x == newX) && (parent_y == newY))  //Se non è un ostacolo e se il nuovo nodo non è uguale al nodo padre, lo aggiungo ai successori
                 ) {
             NewNode = GridNode(newX, newY);
             astarsearch->AddSuccessor(NewNode);

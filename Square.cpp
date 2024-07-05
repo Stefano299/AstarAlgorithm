@@ -6,6 +6,7 @@
 
 #include"Square.h"
 #include"constants.h"
+#include"exceptions.h"
 
 using namespace constants;
 
@@ -27,6 +28,8 @@ sf::Color Square::associateColor(Type type) const {   //Ad ogni tipo di quadrato
             return sf::Color(128,128,128); //Grigio in RGB
         case Type::Path:
             return sf::Color(255, 140, 140); //rosso chiaro
+        default:
+            return sf::Color::Black; //Giusto per essere sicuro che ritorni qualcosa, ma non verrà mai ritornato perchè tipi sono solo 3
     }
 }
 
@@ -47,6 +50,6 @@ void Square::setPos(int x, int y) {     //La x e la y indicano le coordinate nel
         this->y = y;
     }
     else {
-        throw std::out_of_range("Posizione del quadrato non valida");
+        throw invalid_coordinates("Posizione del quadrato non valida");
     }
 }

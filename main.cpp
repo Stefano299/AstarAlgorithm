@@ -68,14 +68,17 @@ vector<sf::Vector2i> newPath(int &count, SquareGrid &squareGrid, GameCharacter &
 }
 
 void nextPathNode(const GameCharacter &hero, GameCharacter &enemy, const vector<sf::Vector2i> &path, int &count,
-                  bool &enemyMoving) {
+                  bool &enemyMoving, SquareGrid& squareGrid) {
     if (isEqual(enemy.getPosX(), path[count].x * SQUARE_SIZE) &&  //Se l'enemy ha raggiunto la posizione del nodo, si passa al nodo successivo nel percorso; così continua ad andare avanti
         isEqual(enemy.getPosY(), path[count].y * SQUARE_SIZE) &&
         isEnoughDistant(hero, enemy) && count < path.size()-1){  //Controllo anche che siano abbastanza distanti (sennò è inutile cercare un percorso) e che count (l'indice del vettore) non vada out of bound
         enemy.setNode(path[count].x, path[count].y);  //Aggiorno il nodo dell'enemy (che sarà il successivo start node)
+        squareGrid.changeElementType(path[count].x, path[count].y, Type::Basic); //Se è giunto ad un nodo voglio togliere il disegno del percorso fino a quel nodo
         count++;
-    } else if (!isEnoughDistant(hero, enemy) || count == path.size()-1) //Se enemy e hero sono molto vicini o se enemy ha percorso tutto il percorso, enemy si ferma
+    } else if (!isEnoughDistant(hero, enemy) || count == path.size()-1) { //Se enemy e hero sono molto vicini o se enemy ha percorso tutto il percorso, enemy si ferma
         enemyMoving = false;
+        squareGrid.reset(); //Se non si muove voglio non venga disegnato alcun percorso
+    }
 }
 
 int main() {
@@ -144,12 +147,13 @@ int main() {
                         }
                     } else {
                         enemyMoving = false;
+                        squareGrid.reset();  //Se si ferma tolgo il disegno del percorso che deve/doveva seguire
                     }
                 }
                 if (enemyMoving) {  //enemyMoving è vero solo se enemy ha un percorso da seguire, sennò sta fermo
                     enemy.move(path[count].x, path[count].y);
                     nextPathNode(hero, enemy, path, count,
-                                 enemyMoving); //controlla se è necessario che l'enemy vada al nodo successivo del suo percorso, in caso lo fa
+                                 enemyMoving, squareGrid); //controlla se è necessario che l'enemy vada al nodo successivo del suo percorso, in caso lo fa
                 }
                 update(window, squareGrid, hero, enemy);
             }
