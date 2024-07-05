@@ -19,6 +19,8 @@ GameCharacter::GameCharacter(float x, float y, float speed,  const string& txtPa
     posX = x;
     posY = y;
     sprite.setTexture(texture);
+    //La texture è 25x25, e quindi anche lo sprite. Voglio che questo, se cambia la dimsione dei quadrati, abbia sempre la loro dimensione
+    sprite.setScale((float)SQUARE_SIZE/25, (float)SQUARE_SIZE/25);
     sprite.setPosition(posX, posY);
     if(centerOrigin)
         sprite.setOrigin((float)SQUARE_SIZE/2, (float)SQUARE_SIZE/2); //L'origine dello sprite: da dove si controlla
