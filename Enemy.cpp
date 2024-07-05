@@ -7,7 +7,7 @@
 
 using namespace constants;
 
-bool Enemy::move(float x, float y) {
+bool Enemy::move(float x, float y) {   //Va ad una determinata coordinata (x, y)
     sprite.move(x*SQUARE_SIZE, y*SQUARE_SIZE);
     float dx = (float)x*SQUARE_SIZE-posX;  //Differenze di posizione
     float dy = (float)y*SQUARE_SIZE-posY;

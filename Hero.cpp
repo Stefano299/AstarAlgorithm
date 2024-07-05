@@ -17,7 +17,7 @@ int sign(float x){  //Per prendere il segno di un float
         return -1;
 }
 
-bool Hero::move(float x, float y) {
+bool Hero::move(float x, float y) {  //Si sposta d x e y rispetto al sua posizione corrente
     if(!isColliding(x, y)){     //Il mio personaggio non può attraversare i muri...
         float length = sqrt(x*x + y*y);  //Normalizzo il vettore così da non andare più veloce in diagonale
         if(length > 0) {
@@ -28,7 +28,6 @@ bool Hero::move(float x, float y) {
         posY += y*speed;
         int newNodeX = posX/SQUARE_SIZE;
         int newNodeY = posY/SQUARE_SIZE;
-        //setInsideWindow();//Per essere sicuro che non esca dalla finestra
         sprite.setPosition(posX, posY);
         if(node.getX() != newNodeX || node.getY() != newNodeY){  //Ritorna vero se le coordinate del nodo sono cambiate
             node.setX(newNodeX);
@@ -44,8 +43,8 @@ bool Hero::move(float x, float y) {
 }
 
 bool Hero::isColliding(float x, float y)const {  //x e y indicano lo spostamento che si vuole compiere
-    int fx = x*speed;
-    int fy = y*speed;
+    float fx = x*speed;
+    float fy = y*speed;
     float originPos = (float)SQUARE_SIZE/2; //Posizione dell'origine rispetto al personaggio (è al centro)
     if(fx > originPos)   //Per quando la velocità è alta, non voglio salti un'intera casella
         fx = originPos;

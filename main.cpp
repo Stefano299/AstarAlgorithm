@@ -28,7 +28,7 @@ void addObstacle(int posX, int posY, SquareGrid &squareGrid, NumberGrid &numberG
 }
 
 void update(sf::RenderWindow &window, const SquareGrid &squareGrid, const GameCharacter &hero,
-            const GameCharacter &enemy) {        //Game loop
+            const GameCharacter &enemy) {       //Funzione che viene chiamata alla fine di ogni (game) loop per aggiornare la finestra
     window.clear(sf::Color::White);
     squareGrid.draw(window);
     hero.draw(window);
@@ -81,8 +81,7 @@ void nextPathNode(const GameCharacter &hero, GameCharacter &enemy, const vector<
 
 int main() {
     SquareGrid squareGrid;
-    sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEGIHT), "Astar", sf::Style::Titlebar |
-                                                                              sf::Style::Close); // con questi parametri rendo la finestra non ridimensionabile
+    sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEGIHT), "Astar", sf::Style::Titlebar | sf::Style::Close); // con questi parametri rendo la finestra non ridimensionabile
     window.setFramerateLimit(60);
     try {
         Hero hero(1800, 700, 8,
@@ -138,8 +137,7 @@ int main() {
                         try {
                             path = newPath(count, squareGrid, enemy, hero, enemyMoving);
                             enemyMoving = true;
-                        } catch (
-                                path_not_found &e) {     //Se non trova un percorso si ferma ma hero si può continuare a muovere
+                        } catch (path_not_found &e) {     //Se non trova un percorso hero si può continuare a muovere
                             cout << e.what() << endl;
                             //L'enemy continua a seguire l'ultimo percorso trovato in caso abbia trovato e poi "perso" il personaggio
                         }

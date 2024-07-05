@@ -11,7 +11,7 @@
 using namespace constants;
 
 NumberGrid::NumberGrid(int width, int height):Grid(width, height) {
-    numbers = new int[width*height];  //Crea una griglia di numeri (Di stesse dimensioni di quelle del quadrato)
+    numbers = new int[width*height];  //Crea una griglia di numeri (Di stesse dimensioni di quella dei quadrati)
     for(int i = 0; i < width*height; i++){
         numbers[i] = 1; //1 significa percorribile
     }

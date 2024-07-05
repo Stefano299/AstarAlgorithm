@@ -2,8 +2,8 @@
 // Created by stefano on 7/2/24.
 //
 
-#ifndef SFML_CONSTANTS_H
-#define SFML_CONSTANTS_H
+#ifndef ASTAR_CONSTANTS_H
+#define ASTAR_CONSTANTS_H
 
 /*Cambiare qualsiasi costante NON rompe in nessun modo il funzionamento del programma.
 //Anche le dimensioni degli sprite si regolano da sole, bisogna solo stare attenti alle coordinate in cui vengono
@@ -19,4 +19,4 @@ namespace constants{
 
 
 
-#endif //SFML_CONSTANTS_H
+#endif //ASTAR_CONSTANTS_H

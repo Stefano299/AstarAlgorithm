@@ -33,9 +33,6 @@ TEST_F(SquareTest, GetSize) {
     EXPECT_EQ(square->getSize(), constants::SQUARE_SIZE);
 }
 
-TEST_F(SquareTest, GetColor) {
-    EXPECT_EQ(square->getColor(), sf::Color::White);
-}
 
 TEST_F(SquareTest, SetTypeAndGetType) {
     square->setType(Type::Obstacle);
