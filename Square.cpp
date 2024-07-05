@@ -7,36 +7,31 @@
 #include"Square.h"
 #include"constants.h"
 #include"exceptions.h"
+/*Sarebbe inutile fare sì che ogni quadrato abbia un diverso colore, in quanto questi consumano memoria
+ e sono più o meno uguali per tutti. Perciò creo una mappa statica: questi vengono allocati una sola volta
+ e ad ogni quadrato viene associato il suo.*/
+std::map<Type, sf::Color> Square::colors = {{Type::Basic, sf::Color::White},
+                                            {Type::Obstacle, sf::Color(128,128,128)},
+                                            {Type::Path, sf::Color(255, 140, 140)}};
 
 using namespace constants;
 
-Square::Square(Type t): size(SQUARE_SIZE), type(t) {     //Li rendo quadrati di lato 25
+Square::Square(Type t, float s, int x, int y): size(s), type(t) {     //Li rendo quadrati di lato 25
+    this->x = x;
+    this->y = y;
     shape.setSize(sf::Vector2f(size,size));
-    color = associateColor(t);//Associa il colore in base al tipo di quadrato
-    shape.setFillColor(color);
+    auto color = colors.find(t); //Iteratore al colore che voglio, non ne controllo la validità perché i tipi sono solo 3: per forza trova qualcosa
+    shape.setFillColor(color->second);
 }
 
 const sf::RectangleShape &Square::getShape() const {
     return shape;
 }
 
-sf::Color Square::associateColor(Type type) const {   //Ad ogni tipo di quadrato è associato in preciso colore, per riconoscerlo facilmente nel gioco
-    switch(type){
-        case Type::Basic:
-            return sf::Color::White;
-        case Type::Obstacle:
-            return sf::Color(128,128,128); //Grigio in RGB
-        case Type::Path:
-            return sf::Color(255, 140, 140); //rosso chiaro
-        default:
-            return sf::Color::Black; //Giusto per essere sicuro che ritorni qualcosa, ma non verrà mai ritornato perchè tipi sono solo 3
-    }
-}
-
 void Square::setType(Type type) {   //Se cambia il tipo del quadrato deve cambiare anche il suo colore
     this->type = type;
-    color = associateColor(type);
-    shape.setFillColor(color);
+    auto color = colors.find(type); //Iteratore al colore che voglio
+    shape.setFillColor(color->second);
 }
 
 Type Square::getType() const {

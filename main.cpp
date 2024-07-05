@@ -13,16 +13,14 @@
 
 using namespace constants;
 
-void removeObstacle(int posX, int posY, SquareGrid &squareGrid,
-                    NumberGrid &numberGrid) {  //Rimuove un ostacolo in una posizioene
+void removeObstacle(int posX, int posY, SquareGrid &squareGrid, NumberGrid &numberGrid) {  //Rimuove un ostacolo in una posizioene
     int x = posX / SQUARE_SIZE;  //Ottengo la posizione da quella della griglia a quella pixel
     int y = posY / SQUARE_SIZE;
     squareGrid.changeElementType(x, y, Type::Basic);
     numberGrid.changeElementType(x, y, Type::Basic);
 }
 
-void addObstacle(int posX, int posY, SquareGrid &squareGrid,
-                 NumberGrid &numberGrid) {  //Aggiunge un ostacolo in una posizione
+void addObstacle(int posX, int posY, SquareGrid &squareGrid, NumberGrid &numberGrid) {  //Aggiunge un ostacolo in una posizione
     int x = posX / SQUARE_SIZE;     //Ottengo la posizione da quella della griglia a quella pixel
     int y = posY / SQUARE_SIZE;
     squareGrid.changeElementType(x, y, Type::Obstacle);
@@ -45,7 +43,7 @@ bool isEqual(float a, float b) {  //NON voglio sapere quando i miei personaggi s
         return false;
 }
 
-bool isEnoughDistant(const GameCharacter &hero, const GameCharacter &enemy) {
+bool isEnoughDistant(const GameCharacter &hero, const GameCharacter &enemy) {  //Ritorna verso se hero e enemy non sono troppo vicini
     if (abs(hero.getPosX() - enemy.getPosX()) > SQUARE_SIZE * 2 ||
         abs(hero.getPosY() - enemy.getPosY()) > SQUARE_SIZE * 2) {
         return true;
@@ -60,7 +58,7 @@ vector<sf::Vector2i> newPath(int &count, SquareGrid &squareGrid, GameCharacter &
     vector<sf::Vector2i> path = GridNode::getPath(enemyNode, heroNode);
     count = 0;  //Count = 0 perchè deve cercare una nuova path
     squareGrid.reset();  //Rimuovo il disegno della vecchia path
-    for (auto it: path) {
+    for (auto it: path) {   //I blocchi nel percorso cambiano colore
         squareGrid.changeElementType(it.x, it.y, Type::Path);
     }
     return path;
@@ -82,7 +80,7 @@ void nextPathNode(const GameCharacter &hero, GameCharacter &enemy, const vector<
 }
 
 int main() {
-    SquareGrid squareGrid(GRID_WIDTH, GRID_HEIGHT);
+    SquareGrid squareGrid;
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEGIHT), "Astar", sf::Style::Titlebar |
                                                                               sf::Style::Close); // con questi parametri rendo la finestra non ridimensionabile
     window.setFramerateLimit(60);
@@ -157,7 +155,7 @@ int main() {
                 }
                 update(window, squareGrid, hero, enemy);
             }
-            catch (invalid_coordinates &e) {
+            catch (invalid_coordinates &e) {  //Se, ad esempio, l'utente mette un quadrato  fuori dalla finestra, non voglio terminare  il programma, solo il loop corrente
                 cerr << e.what() << endl;
             }
         }

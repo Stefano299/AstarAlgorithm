@@ -11,10 +11,9 @@
 
 class GameCharacter {
 protected:
-    //TODO fare due classi separate per hero e enemy
     float posX;    //Posizione in pixel, NON sulla griglia
     float posY;
-    float speed;   //TODO refactor troopi attributi
+    float speed;
     GridNode node;
     sf::Sprite sprite;
     sf::Texture texture;

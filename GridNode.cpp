@@ -9,8 +9,7 @@
 using namespace std;
 using namespace constants;
 
-NumberGrid GridNode::numberGrid(constants::GRID_WIDTH, constants::GRID_HEIGHT);
-
+NumberGrid GridNode::numberGrid(constants::GRID_WIDTH, constants::GRID_HEIGHT); //Viene creata la griglia coi numeri che indicano gli ostacoli
 
 void GridNode::setX(int x) {
     if(x >= 0 && x < GRID_WIDTH)

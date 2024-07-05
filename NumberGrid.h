@@ -6,12 +6,13 @@
 #define ASTAR_NUMBERGRID_H
 
 #include"Grid.h"
+#include"constants.h"
 
 class NumberGrid: public Grid{
 private:
     int* numbers; //Numeri che indicano se una casella è percorribile o no
 public:
-    NumberGrid(int width, int height);
+    explicit NumberGrid(int width = constants::GRID_WIDTH, int height = constants::GRID_HEIGHT);
     int* getArray() const{return numbers;}
     void changeElementType(int x,  int y, Type type) override;
     int getNumber(int x, int y) const;

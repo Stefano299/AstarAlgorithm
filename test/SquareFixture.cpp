@@ -5,6 +5,7 @@
 #include "gtest/gtest.h"
 #include "../Square.h"
 #include"../constants.h"
+#include"../exceptions.h"
 
 class SquareTest : public ::testing::Test {
 protected:
@@ -48,5 +49,5 @@ TEST_F(SquareTest, SetPosPositive) {
 }
 
 TEST_F(SquareTest, SetPosNegative) {
-    EXPECT_THROW(square->setPos(-3, -4),std::out_of_range);
+    EXPECT_THROW(square->setPos(-3, -4), invalid_coordinates);
 }

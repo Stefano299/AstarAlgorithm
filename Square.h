@@ -6,6 +6,9 @@
 #define SFML_SQUARE_H
 
 #include<SFML/Graphics.hpp>
+#include<map>
+
+#include"constants.h"
 
 enum class Type{   //Enumerazione dei possibili tipo di quadrato
     Basic,
@@ -14,19 +17,17 @@ enum class Type{   //Enumerazione dei possibili tipo di quadrato
 };
 
 class Square {
-protected:
-    sf::Color associateColor(Type type) const;
+private:
+    static std::map<Type, sf::Color> colors;
     sf::RectangleShape shape;
-    sf::Color color;
     Type type;
     int x;   //Posizioni nella griglia
     int y;
-    int size;
+    float size;
 public:
-    explicit Square(Type t = Type::Basic);
+    Square(Type t = Type::Basic, float s = constants::SQUARE_SIZE, int x = 0, int y = 0);
     const sf::RectangleShape& getShape() const;
-    int getSize() const{return size;}
-    const sf::Color& getColor() const{return color;}
+    float getSize() const{return size;}
     void setType(Type type);
     void setPos(int x, int y);
     int getX() const{return x;}

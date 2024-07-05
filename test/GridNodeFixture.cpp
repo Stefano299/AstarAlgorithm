@@ -15,6 +15,22 @@ TEST_F(GridNodeTest, GoalDistanceEstimate) {
     ASSERT_FLOAT_EQ(distance, 5.0); // Dovrebbe essere 5 per il teorema di Pitagora
 }
 
+TEST_F(GridNodeTest, NodeCost) {
+    GridNode node(0, 0);
+    GridNode nodeSuccessor(1, 0);
+    float cost = node.GetCost(nodeSuccessor);
+    ASSERT_EQ(cost, sqrt(1)); // Dovrebbe essere 5 per il teorema di Pitagora
+}
+
+
+TEST_F(GridNodeTest, NodeCostDiagonal) {
+    GridNode node(0, 0);
+    GridNode nodeSuccessor(1, 1);
+    float cost = node.GetCost(nodeSuccessor);
+    ASSERT_FLOAT_EQ(cost, sqrt(2)); // Dovrebbe essere 5 per il teorema di Pitagora
+}
+
+
 TEST_F(GridNodeTest, IsGoalTrue) {
     GridNode nodeStart(5, 5);
     GridNode nodeGoal(5, 5);

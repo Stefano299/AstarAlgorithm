@@ -8,6 +8,7 @@
 #include<SFML/Graphics.hpp>
 
 #include"Grid.h"
+#include"constants.h"
 
 enum class Type;
 class Square;
@@ -15,7 +16,7 @@ class SquareGrid: public Grid {
 private:
     Square* squares;  //Griglia di quadrati (intesi come forme geometriche disegnabili)
 public:
-    SquareGrid(int width, int height);
+    explicit SquareGrid(int width = constants::GRID_WIDTH, int height = constants::GRID_HEIGHT);
     virtual ~SquareGrid();
     void reset(); //Rimuove i blocchi path per quando si trova una nuova path
     void draw(sf::RenderWindow& window) const;
