@@ -30,6 +30,8 @@ set(SOURCE_FILES main.cpp
 
 # Link alle librerie Astar
 add_executable(Astar ${SOURCE_FILES}
+        Path.cpp
+        Path.h
 )
 
 add_library(core ${SOURCE_FILES})

@@ -46,10 +46,6 @@ size_t GridNode::Hash() const{
     return h1 ^ (h2 << 1);
 }
 
-void GridNode::PrintNodeInfo() const{
-    cout << "Nodo alla posizione: " << x << ", " << y << endl;
-}
-
 float GridNode::GoalDistanceEstimate(const GridNode &nodeGoal) const{
     return sqrt((x - nodeGoal.x) * (x - nodeGoal.x) + (y - nodeGoal.y) * (y - nodeGoal.y)); //Euclidea
     //return (abs(x - nodeGoal.x) + abs(y - nodeGoal.y)); MANHATTAN

@@ -1,20 +1,18 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
-#include"constants.h"
-#include"Square.h"
-#include"NumberGrid.h"
-#include"SquareGrid.h"
-#include"GridNode.h"
-#include"GameCharacter.h"
-#include"Hero.h"
-#include"Enemy.h"
-#include"exceptions.h"
-
+#include "constants.h"
+#include "Square.h"
+#include "NumberGrid.h"
+#include "SquareGrid.h"
+#include "GridNode.h"
+#include "GameCharacter.h"
+#include "Hero.h"
+#include "Enemy.h"
+#include "exceptions.h"
+#include"Path.h"
 
 using namespace constants;
-
-
 
 bool handleHeroMovement(bool &makePath, Hero& hero) {
     int dx= 0;
@@ -36,47 +34,41 @@ bool handleHeroMovement(bool &makePath, Hero& hero) {
         dx += 1;
         makePath = true;
     }
-    return hero.move(dx, dy);
+    return hero.move(dx, dy);  //Passo a move la direzione in cui hero si deve muovere, normalizzando (in caso) il vettore spostamento
 }
 
-
-void removeObstacle(int posX, int posY, SquareGrid &squareGrid, NumberGrid &numberGrid) {  //Rimuove un ostacolo in una posizioene
-    int x = posX / SQUARE_SIZE;  //Ottengo la posizione da quella della griglia a quella pixel
+void removeObstacle(int posX, int posY, SquareGrid &squareGrid, NumberGrid &numberGrid) {
+    int x = posX / SQUARE_SIZE;
     int y = posY / SQUARE_SIZE;
-    squareGrid.changeElementType(x, y, Type::Basic);
+    squareGrid.changeElementType(x, y, Type::Basic);  //Ridisegna i quadrati e rirende il quadrato percorribile
     numberGrid.changeElementType(x, y, Type::Basic);
 }
 
-void addObstacle(int posX, int posY, SquareGrid &squareGrid, NumberGrid &numberGrid) {  //Aggiunge un ostacolo in una posizione
-    int x = posX / SQUARE_SIZE;     //Ottengo la posizione da quella della griglia a quella pixel
+void addObstacle(int posX, int posY, SquareGrid &squareGrid, NumberGrid &numberGrid) {
+    int x = posX / SQUARE_SIZE;
     int y = posY / SQUARE_SIZE;
-    squareGrid.changeElementType(x, y, Type::Obstacle);
-    numberGrid.changeElementType(x, y, Type::Obstacle);
+    squareGrid.changeElementType(x, y, Type::Obstacle);  //Disegna il quadrato dell'ostacolo
+    numberGrid.changeElementType(x, y, Type::Obstacle);  //Rende l'ostacolo non percorribile
 }
 
 void handleEvents(sf::RenderWindow &window, SquareGrid &squareGrid) {
     sf::Event event;
-    while (window.pollEvent(event)) {      //Loop per controllare la presenza di eventi
+    while (window.pollEvent(event)) {
         if (event.type == sf::Event::Closed)
             window.close();
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {  //Aggiunge un ostacolo dove si clicca
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {  //Aggiunge ostacolo nel quadrato clicclato dal mouse
             sf::Vector2i mousePos = sf::Mouse::getPosition(window);
             addObstacle(mousePos.x, mousePos.y, squareGrid, GridNode::numberGrid);
-
         }
-        if (sf::Mouse::isButtonPressed(
-                (sf::Mouse::Right))) {  //Rimuove un ostacolo dove si è fatto click destro
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {  //Rimuove ostacolo nel quadrato clicclato dal mouse
             sf::Vector2i mousePos = sf::Mouse::getPosition(window);
             removeObstacle(mousePos.x, mousePos.y, squareGrid, GridNode::numberGrid);
         }
     }
 }
 
-
-
-
 void update(sf::RenderWindow &window, const SquareGrid &squareGrid, const GameCharacter &hero,
-            const GameCharacter &enemy) {       //Funzione che viene chiamata alla fine di ogni (game) loop per aggiornare la finestra
+            const GameCharacter &enemy) {  //Aggiorna la finestra alla fine del (game) loop
     window.clear(sf::Color::White);
     squareGrid.draw(window);
     hero.draw(window);
@@ -84,102 +76,92 @@ void update(sf::RenderWindow &window, const SquareGrid &squareGrid, const GameCh
     window.display();
 }
 
-bool isEqual(float a, float b) {  //NON voglio sapere quando i miei personaggi sono ESATTAMENTE vicini
-    if (abs(a - b) < (float) SQUARE_SIZE / 2)
+bool isEqual(float a, float b) {  //La uso per capire quando enemy raggiunge un nodo, voglio saperlo approsimativamente non esattamente (la  posizione non sarà completamente esatta)
+    if(abs(a - b) < (float) SQUARE_SIZE / 2)
         return true;
     else
         return false;
 }
 
-bool isEnoughDistant(const GameCharacter &hero, const GameCharacter &enemy) {  //Ritorna verso se hero e enemy non sono troppo vicini
-    if (abs(hero.getPosX() - enemy.getPosX()) > SQUARE_SIZE * 2 ||
-        abs(hero.getPosY() - enemy.getPosY()) > SQUARE_SIZE * 2) {
+bool isEnoughDistant(const GameCharacter &hero, const GameCharacter &enemy) {
+    if(abs(hero.getPosX() - enemy.getPosX()) > SQUARE_SIZE * 2 ||
+       abs(hero.getPosY() - enemy.getPosY()) > SQUARE_SIZE * 2)
         return true;
-    } else
+    else
         return false;
 }
 
-vector<sf::Vector2i> newPath(int &count, SquareGrid &squareGrid, GameCharacter &enemy, GameCharacter &hero) {
+Path newPath(SquareGrid &squareGrid, GameCharacter &enemy, GameCharacter &hero) {
     GridNode heroNode = hero.getNode();
     GridNode enemyNode = enemy.getNode();
-    vector<sf::Vector2i> path = GridNode::getPath(enemyNode, heroNode);
-    count = 0;  //Count = 0 perchè deve cercare una nuova path
-    squareGrid.reset();  //Rimuovo il disegno della vecchia path
-    for (auto it: path) {   //I blocchi nel percorso cambiano colore
-        squareGrid.changeElementType(it.x, it.y, Type::Path);
+    Path pathState;
+    pathState.setPath(GridNode::getPath(enemyNode, heroNode));
+    pathState.resetCount();
+    squareGrid.reset();
+    for (auto &node : pathState.getPath()) {
+        squareGrid.changeElementType(node.x, node.y, Type::Path);
     }
-    return path;
-
+    return pathState;
 }
 
-bool nodeReached(const Hero &hero, Enemy& enemy, const vector<sf::Vector2i> &path, int &count){
-    if(isEqual(enemy.getPosX(), path[count].x * SQUARE_SIZE) &&  //Se l'enemy ha raggiunto la posizione del nodo, si passa al nodo successivo nel percorso; così continua ad andare avanti
-       isEqual(enemy.getPosY(), path[count].y * SQUARE_SIZE) &&
-       isEnoughDistant(hero, enemy) && count < path.size()-1){  //Controllo anche che siano abbastanza distanti (sennò è inutile cercare un percorso) e che count (l'indice del vettore) non vada out of bound
-        return true;
-    } else
-        return false;
+bool nodeReached(const Hero &hero, Enemy &enemy, Path &pathState) {
+    return isEqual(enemy.getPosX(), pathState.getElement().x * SQUARE_SIZE) &&
+           isEqual(enemy.getPosY(), pathState.getElement().y * SQUARE_SIZE) &&
+           isEnoughDistant(hero, enemy) && !pathState.isFinished();
 }
 
-void nextPathNode(const Hero &hero, Enemy& enemy, const vector<sf::Vector2i> &path, int &count,
-                  SquareGrid& squareGrid) {
-    if (nodeReached(hero, enemy, path, count)){  //Controllo anche che siano abbastanza distanti (sennò è inutile cercare un percorso) e che count (l'indice del vettore) non vada out of bound
-        enemy.setNode(path[count].x, path[count].y);  //Aggiorno il nodo dell'enemy (che sarà il successivo start node)
-        squareGrid.changeElementType(path[count].x, path[count].y, Type::Basic); //Se è giunto ad un nodo voglio togliere il disegno del percorso fino a quel nodo
-        count++;
-    } else if (!isEnoughDistant(hero, enemy) || count == path.size()-1) { //Se enemy e hero sono molto vicini o se enemy ha percorso tutto il percorso, enemy si ferma
+void nextPathNode(const Hero &hero, Enemy &enemy, Path &pathState, SquareGrid &squareGrid) {
+    if (nodeReached(hero, enemy, pathState)) {
+        enemy.setNode(pathState.getElement().x, pathState.getElement().y);
+        squareGrid.changeElementType(pathState.getElement().x,pathState.getElement().y, Type::Basic);
+        pathState.increaseCount();
+    } else if (!isEnoughDistant(hero, enemy) || pathState.isFinished()) {
         enemy.moving = false;
-        squareGrid.reset(); //Se non si muove voglio non venga disegnato alcun percorso
+        squareGrid.reset();
     }
 }
 
 int main() {
     SquareGrid squareGrid;
-    sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Astar", sf::Style::Titlebar | sf::Style::Close); // con questi parametri rendo la finestra non ridimensionabile
+    sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Astar", sf::Style::Titlebar | sf::Style::Close);
     window.setFramerateLimit(60);
     try {
-        Hero hero(1800, 700, 8,
-                  "../img/hero.png"); //Voglio che l'hero abbia l'origine al centro, per gestire meglio le collision
+        Hero hero(1800, 700, 8, "../img/hero.png");
         Enemy enemy(70, 700, 5, "../img/enemy.png");
-        //GridNode::worldGrid = numberGrid.getArray();
-        vector<sf::Vector2i> path;
-        int count;
-        enemy.moving = false;  //Se l'enemy si muove
+        Path pathState;
+        enemy.moving = false;
         while (window.isOpen()) {
             try {
                 handleEvents(window, squareGrid);
                 bool makePath = false;
-                bool heroNodeChanged = false; //Booleano che indica  se la posizione del nodo dell'hero è cambiata, per non creare nuovi percorsi inutilmente
-                heroNodeChanged = handleHeroMovement(makePath, hero);//Faccio così per poter normalizzar il vettore spostamento nel metodo moveBy
-                if ((makePath &&  //MakePath è = 1 se hero si è mosso, e c'è quindi bisogno di creare un nuovo percorso
-                     heroNodeChanged) || count == path.size()-1) {  //Oltre a verificare hero si sia mosso, verifica che sia cambiata la sua posizione sulla griglia, o è inutile trovare un nuovo percorso
-                    if (isEnoughDistant(hero,      //Lo cerco anche se count == path.size() -1: Se il nemico aveva perso hero e finisce l'ultimo percorso trovato, cerca di nuovo hero anche se esso non si muove
-                                        enemy)) {      //La nuova path viene calcolata solo se l'eroe e il nemico sono sufficientemente distanti
+                bool heroNodeChanged = handleHeroMovement(makePath, hero);
+                if ((makePath && heroNodeChanged) || pathState.isFinished()) {
+                    if (isEnoughDistant(hero, enemy)) {
                         try {
-                            path = newPath(count, squareGrid, enemy, hero);
+                            pathState = newPath(squareGrid, enemy, hero);
                             enemy.moving = true;
-                        } catch (path_not_found &e) {     //Se non trova un percorso hero si può continuare a muovere
-                            cout << e.what() << endl;
-                            //L'enemy continua a seguire l'ultimo percorso trovato in caso abbia trovato e poi "perso" il personaggio
+                        } catch (path_not_found &e) {
+                            std::cout << e.what() << std::endl;
                         }
                     } else {
                         enemy.moving = false;
-                        squareGrid.reset();  //Se si ferma tolgo il disegno del percorso che deve/doveva seguire
+                        squareGrid.reset();
                     }
                 }
-                if (enemy.moving) {  //enemyMoving è vero solo se enemy ha un percorso da seguire, sennò sta fermo
-                    enemy.move(path[count].x, path[count].y);
-                    nextPathNode(hero, enemy, path, count,squareGrid); //controlla se è necessario che l'enemy vada al nodo successivo del suo percorso, in caso lo fa
+                if (enemy.moving) {
+                    enemy.move(pathState.getElement().x, pathState.getElement().y);
+                    nextPathNode(hero, enemy, pathState, squareGrid);
                 }
                 update(window, squareGrid, hero, enemy);
-            }
-            catch (invalid_coordinates &e) {  //Se, ad esempio, l'utente mette un quadrato  fuori dalla finestra, non voglio terminare  il programma, solo il loop corrente
-                cerr << e.what() << endl;
+            } catch (invalid_coordinates &e) {
+                std::cerr << e.what() << std::endl;
             }
         }
-    }catch(failed_character_init& e){
-        cerr << e.what() << endl;
+    } catch (failed_character_init &e) {
+        std::cerr << e.what() << std::endl;
+        return -1;
+    }catch(out_of_range& e){
+        e.what();
         return -1;
     }
 }
-
