@@ -15,7 +15,7 @@ using namespace constants;
 
 void removeObstacle(int posX, int posY, SquareGrid &squareGrid,
                     NumberGrid &numberGrid) {  //Rimuove un ostacolo in una posizioene
-    int x = posX / SQUARE_SIZE;
+    int x = posX / SQUARE_SIZE;  //Ottengo la posizione da quella della griglia a quella pixel
     int y = posY / SQUARE_SIZE;
     squareGrid.changeElementType(x, y, Type::Basic);
     numberGrid.changeElementType(x, y, Type::Basic);
@@ -23,7 +23,7 @@ void removeObstacle(int posX, int posY, SquareGrid &squareGrid,
 
 void addObstacle(int posX, int posY, SquareGrid &squareGrid,
                  NumberGrid &numberGrid) {  //Aggiunge un ostacolo in una posizione
-    int x = posX / SQUARE_SIZE;
+    int x = posX / SQUARE_SIZE;     //Ottengo la posizione da quella della griglia a quella pixel
     int y = posY / SQUARE_SIZE;
     squareGrid.changeElementType(x, y, Type::Obstacle);
     numberGrid.changeElementType(x, y, Type::Obstacle);
@@ -130,9 +130,9 @@ int main() {
                 bool heroNodeChanged = false; //Booleano che indica  se la posizione del nodo dell'hero è cambiata, per non creare nuovi percorsi inutilmente
                 heroNodeChanged = hero.move(dx,
                                             dy);  //Faccio così per poter normalizzar il vettore spostamento nel metodo moveBy
-                if (makePath &&
-                    heroNodeChanged) { //MakePath è = 1 se hero si è mosso, e c'è quindi bisogno di creare un nuovo percorso
-                    if (isEnoughDistant(hero,
+                if ((makePath &&  //MakePath è = 1 se hero si è mosso, e c'è quindi bisogno di creare un nuovo percorso
+                    heroNodeChanged) || count == path.size()-1) {  //Oltre a verificare hero si sia mosso, verifica che sia cambiata la sua posizione sulla griglia, o è inutile trovare un nuovo percorso
+                    if (isEnoughDistant(hero,      //Lo cerco anche se count == path.size() -1: Se il nemico aveva perso hero e finisce l'ultimo percorso trovato, cerca di nuovo hero anche se esso non si muove
                                         enemy)) {      //La nuova path viene calcolata solo se l'eroe e il nemico sono sufficientemente distanti
                         try {
                             path = newPath(count, squareGrid, enemy, hero, enemyMoving);
@@ -146,7 +146,7 @@ int main() {
                         enemyMoving = false;
                     }
                 }
-                if (enemyMoving) {
+                if (enemyMoving) {  //enemyMoving è vero solo se enemy ha un percorso da seguire, sennò sta fermo
                     enemy.move(path[count].x, path[count].y);
                     nextPathNode(hero, enemy, path, count,
                                  enemyMoving); //controlla se è necessario che l'enemy vada al nodo successivo del suo percorso, in caso lo fa

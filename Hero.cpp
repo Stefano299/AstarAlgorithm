@@ -39,7 +39,6 @@ bool Hero::move(float x, float y) {
             return false;
     }
     else {
-        cout << "Colliding" << endl; //Per sicurezza in caso di collisione lo mando indietro
         return false;
     }
 }
