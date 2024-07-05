@@ -4,7 +4,9 @@
 
 #ifndef SFML_GRID_H
 #define SFML_GRID_H
+
 #include<SFML/Graphics.hpp>
+
 #include"Grid.h"
 
 enum class Type;
@@ -13,7 +15,7 @@ class SquareGrid: public Grid {
 private:
     Square* squares;  //Griglia di quadrati (intesi come forme geometriche disegnabili)
 public:
-    SquareGrid();
+    SquareGrid(int width, int height);
     virtual ~SquareGrid();
     void reset(); //Rimuove i blocchi path per quando si trova una nuova path
     void draw(sf::RenderWindow& window) const;

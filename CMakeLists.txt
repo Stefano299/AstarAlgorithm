@@ -21,15 +21,15 @@ set(SOURCE_FILES main.cpp
         NumberGrid.h
         Grid.cpp
         GameCharacter.cpp
-        GameCharacter.h)
-
-# Link alle librerie Astar
-add_executable(Astar ${SOURCE_FILES}
+        GameCharacter.h
         Hero.cpp
         Hero.h
         Enemy.cpp
         Enemy.h
+        exceptions.h)
 
+# Link alle librerie Astar
+add_executable(Astar ${SOURCE_FILES}
 )
 
 add_library(core ${SOURCE_FILES})

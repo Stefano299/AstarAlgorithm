@@ -4,14 +4,7 @@
 class GridNodeTest : public ::testing::Test {
 protected:
     void SetUp() override {
-        GridNode::worldGrid = new int[100]; // Assuming a 10x10 grid for simplicity
-        for(int i = 0; i < 100; ++i) {
-            GridNode::worldGrid[i] = 1; // Initialize all cells as non-obstacles
-        }
-    }
-
-    void TearDown() override {
-        delete[] GridNode::worldGrid;
+        NumberGrid numberGrid(10, 10);
     }
 };
 

@@ -2,7 +2,9 @@
 // Created by stefano on 7/2/24.
 //
 
-#include "Square.h"
+#include<iostream>
+
+#include"Square.h"
 #include"constants.h"
 
 using namespace constants;
@@ -25,9 +27,6 @@ sf::Color Square::associateColor(Type type) const {   //Ad ogni tipo di quadrato
             return sf::Color(128,128,128); //Grigio in RGB
         case Type::Path:
             return sf::Color(255, 140, 140); //rosso chiaro
-        default:
-            throw std::invalid_argument("Tipo non esistente"); //Ci sono solo 4 tipi...,
-            //TODO gestire eccezione
     }
 }
 
@@ -42,11 +41,12 @@ Type Square::getType() const {
 }
 
 void Square::setPos(int x, int y) {     //La x e la y indicano le coordinate nella griglia, ma col metodo setPosition inserisco la posizione nella finestra di gioco
-    if(x>=0 && x < GRID_SIZE && y >= 0 && y < GRID_SIZE){
+    if(x>=0 && x < GRID_WIDTH && y >= 0 && y < GRID_HEIGHT){
         shape.setPosition(x*SQUARE_SIZE, y*SQUARE_SIZE);
         this->x = x;
         this->y = y;
     }
-    else
+    else {
         throw std::out_of_range("Posizione del quadrato non valida");
+    }
 }

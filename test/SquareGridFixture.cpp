@@ -2,13 +2,14 @@
 #include "../Square.h"
 #include "../constants.h"
 #include "../SquareGrid.h"
+#include"../exceptions.h"
 
 class SquareGridTest : public ::testing::Test {
 protected:
     SquareGrid* grid;
 
     void SetUp() override {
-        grid = new SquareGrid;
+        grid = new SquareGrid(constants::GRID_WIDTH,  constants::GRID_HEIGHT);
     }
 
     void TearDown() override {
@@ -17,8 +18,8 @@ protected:
 };
 
 TEST_F(SquareGridTest, DefaultConstructor) {
-    EXPECT_EQ(grid->getHeight(), constants::GRID_SIZE);
-    EXPECT_EQ(grid->getHeight(), constants::GRID_SIZE);
+    EXPECT_EQ(grid->getHeight(), constants::GRID_HEIGHT);
+    EXPECT_EQ(grid->getWidth(), constants::GRID_WIDTH);
 }
 
 TEST_F(SquareGridTest, SquaresGeneration){
@@ -26,7 +27,7 @@ TEST_F(SquareGridTest, SquaresGeneration){
 }
 
 TEST_F(SquareGridTest, GetSquareException) {
-    EXPECT_THROW(grid->getSquare(-1, 0), std::out_of_range);
+    EXPECT_THROW(grid->getSquare(-1, 0), invalid_coordinates);
 }
 
 TEST_F(SquareGridTest, GetElementType){

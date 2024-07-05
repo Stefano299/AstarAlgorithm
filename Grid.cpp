@@ -4,10 +4,8 @@
 #include"Grid.h"
 #include"constants.h"
 
-#include<exception>
-
 bool Grid::isValid(int x, int y) const {
-    if(x >= 0 && x < constants::GRID_SIZE && y >= 0 && y < constants::GRID_SIZE)
+    if(x >= 0 && x < constants::GRID_WIDTH&& y >= 0 && y < constants::GRID_HEIGHT)
         return true;
     else
         return false;

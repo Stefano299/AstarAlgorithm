@@ -6,6 +6,7 @@
 #define ASTAR_GAMECHARACTER_H
 
 #include<SFML/Graphics.hpp>
+
 #include"GridNode.h"
 
 class GameCharacter {
@@ -20,9 +21,9 @@ protected:
 public:
     GameCharacter(float x, float y, float speed, const string& txtPath, bool centerOrigin = false);
     virtual ~GameCharacter();
-    virtual void move(float x, float y) = 0;   //Si muove in una posizione INDICATA SULLA GRIGLIA
+    virtual bool move(float x, float y) = 0;   //Si muove in una posizione INDICATA SULLA GRIGLIA
     void draw(sf::RenderWindow& window) const;
-    GridNode* getNode() const{return node;}
+    GridNode getNode() const{return node;}
     float getPosY() const {return posY;}
     float getPosX() const {return posX;}
     float getSpeed() const{return speed;}

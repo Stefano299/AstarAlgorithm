@@ -1,17 +1,20 @@
-#include "GridNode.h"
-#include <cmath>
-#include <stdexcept>
-#include <iostream>
+#include<cmath>
+#include<stdexcept>
+#include<iostream>
+
+#include"GridNode.h"
+#include"exceptions.h"
+#include"constants.h"
 
 using namespace std;
 
-NumberGrid GridNode::numberGrid;
+NumberGrid GridNode::numberGrid(constants::GRID_WIDTH, constants::GRID_HEIGHT);
 
 int GridNode::GetGrid(int x, int y) const {
-    if (x < 0 || x >= constants::GRID_SIZE || y < 0 || y >= constants::GRID_SIZE) {
+    if (x < 0 || x >= constants::GRID_WIDTH || y < 0 || y >= constants::GRID_HEIGHT) {
         return 9;
     }
-    return numberGrid.getNummber(x,y);
+    return numberGrid.getNumber(x,y);
 }
 
 bool GridNode::IsSameState(const GridNode &rhs) const{
@@ -101,12 +104,10 @@ vector<sf::Vector2i> GridNode::getPath(GridNode &nodeStart,GridNode &nodeEnd){
 
         do {
             SearchState = astarsearch.SearchStep();
-
             SearchSteps++;
         } while (SearchState == AStarSearch<GridNode>::SEARCH_STATE_SEARCHING);
 
         if (SearchState == AStarSearch<GridNode>::SEARCH_STATE_SUCCEEDED) {
-            cout << "Trovato un percorso" << endl;
             GridNode *node = astarsearch.GetSolutionStart();
             int steps = 0;
             //Qua salto i dettagli dell'inizio del percorso
@@ -121,8 +122,7 @@ vector<sf::Vector2i> GridNode::getPath(GridNode &nodeStart,GridNode &nodeEnd){
             astarsearch.FreeSolutionNodes(); //Liberare il vettore dei nodi una volta che è stato trovato il percorso
 
         } else if (SearchState == AStarSearch<GridNode>::SEARCH_STATE_FAILED) {
-            cout << "Non è stato possibile trovare un percorso" << endl;
-            throw runtime_error("Percorso non trovato");
+            throw path_not_found("Percorso non trovato");
         }
         SearchCount++;
         astarsearch.EnsureMemoryFreed();

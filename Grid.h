@@ -12,7 +12,7 @@ protected:
     int width;
     int height;
 public:
-    Grid(int w, int h):width(h), height(h){}
+    Grid(int w, int h):width(w), height(h){}
     int getWidth() const{return width;}
     int getHeight() const{return height;}
     virtual void changeElementType(int x,  int y, Type type) = 0;//Metodo per cambaire il tipo di un quadrato/numero ad una certa posizione

@@ -10,7 +10,7 @@
 class Enemy: public GameCharacter {
 public:
     Enemy(float x, float y, float speed, const string& txtPath):  GameCharacter(x, y, speed, txtPath, false){}
-    void move(float x, float y) override;
+    bool move(float x, float y) override;
 };
 
 

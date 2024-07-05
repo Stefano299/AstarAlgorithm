@@ -5,13 +5,14 @@
 #ifndef ASTAR_GRIDNODE_H
 #define ASTAR_GRIDNODE_H
 
-#include <iostream>
-#include <stdio.h>
-#include <math.h>
+#include<iostream>
+#include<stdio.h>
+#include<math.h>
 #include<SFML/Graphics.hpp>
-#include "astar/stlastar.h"
+
+#include"astar/stlastar.h"
 #include"constants.h"
-#include "NumberGrid.h"
+#include"NumberGrid.h"
 
 using namespace std;
 
