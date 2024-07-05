@@ -26,12 +26,13 @@ set(SOURCE_FILES main.cpp
         Hero.h
         Enemy.cpp
         Enemy.h
-        exceptions.h)
+        exceptions.h
+        Path.cpp
+        Path.h)
 
 # Link alle librerie Astar
 add_executable(Astar ${SOURCE_FILES}
-        Path.cpp
-        Path.h
+
 )
 
 add_library(core ${SOURCE_FILES})

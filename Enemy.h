@@ -9,7 +9,7 @@
 
 class Enemy: public GameCharacter {
 public:
-    bool moving; //non ho motivo di renderla privata.
+    bool moving; //non ho motivo di renderla privata. Il codice diventerebbe molto difficile da leggere nel main
     Enemy(float x, float y, float speed, const string& txtPath):  GameCharacter(x, y, speed, txtPath, false){}
     bool move(float x, float y) override;
 };

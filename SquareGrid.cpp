@@ -47,7 +47,7 @@ void SquareGrid::changeElementType(int x, int y, Type type) {
         throw invalid_coordinates("Coordinate del quadrato non valide");
 }
 
-void SquareGrid::reset() {  //Riporta i blocchi allo stato iniziale (Baic)
+void SquareGrid::resetPath() {  //Riporta i blocchi del percorsoallo stato iniziale (Baic)
     for(int i = 0; i < height*width; i++){
         if(squares[i].getType()==Type::Path){
             squares[i].setType(Type::Basic);

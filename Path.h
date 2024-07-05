@@ -10,15 +10,16 @@
 
 class Path {
 private:
-    unsigned int count;
+    unsigned int index;
     std::vector<sf::Vector2i> path;
 public:
-    Path():count(0){}
-    void resetCount(){count = 0;}
-    void increaseCount();
+    Path():index(0){}
+    void reset(){index = 0;}
+    void nextNode();
     const std::vector<sf::Vector2i>& getPath() const{return path;}
     void setPath(std::vector<sf::Vector2i> p){path = p;}
-    sf::Vector2i& getElement(){return path[count];}
+    sf::Vector2i& getElement(){return path[index];}
+    unsigned int getIndex() const{return index;}
     bool isFinished() const;
 };
 

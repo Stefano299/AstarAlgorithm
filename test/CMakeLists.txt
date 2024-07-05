@@ -10,6 +10,7 @@ set(TEST_SOURCE_FILES runAllTests.cpp
         GridNodeFixture.cpp
         EnemyFixture.cpp
         HeroFixture.cpp
+        PathFixture.cpp
 )
 add_executable(runTests ${TEST_SOURCE_FILES})
 

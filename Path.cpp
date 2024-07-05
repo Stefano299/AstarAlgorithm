@@ -3,16 +3,17 @@
 //
 
 #include "Path.h"
+#include"exceptions.h"
 
-void Path::increaseCount() {
-    if (count < path.size())
-        count++;
+void Path::nextNode() {
+    if (index < path.size())
+        index++;
     else
-        throw std::out_of_range("Tentato accesso al path con un indice non valido");
+        throw path_out_of_bound("Tentato accesso al path con un indice non valido");
 }
 
 bool Path::isFinished() const {
-    if (count >= path.size() - 1)
+    if (index >= path.size() - 1)
         return true;
     else
         return false;

@@ -23,5 +23,10 @@ public:
     explicit failed_character_init(const std::string& msg): std::invalid_argument(msg){}
 };
 
+class path_out_of_bound: public std::out_of_range {
+public:
+    explicit path_out_of_bound(const std::string& msg): std::out_of_range(msg){}
+};
+
 
 #endif //ASTAR_EXCEPTIONS_H
