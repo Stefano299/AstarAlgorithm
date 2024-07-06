@@ -18,28 +18,25 @@ int sign(float x){  //Per prendere il segno di un float
 }
 
 bool Hero::move(float x, float y) {  //Si sposta d x e y rispetto al sua posizione corrente
-    if(!isColliding(x, y)){     //Il mio personaggio non può attraversare i muri...
-        float length = sqrt(x*x + y*y);  //Normalizzo il vettore così da non andare più veloce in diagonale
-        if(length > 0) {
+    if(!isColliding(x, y)) {     //Il mio personaggio non può attraversare i muri...
+        float length = sqrt(x * x + y * y);  //Normalizzo il vettore così da non andare più veloce in diagonale
+        if (length > 0) {
             x /= length;
             y /= length;
         }
-        posX += x*speed;
-        posY += y*speed;
-        int newNodeX = posX/SQUARE_SIZE;
-        int newNodeY = posY/SQUARE_SIZE;
+        posX += x * speed;
+        posY += y * speed;
+        int newNodeX = posX / SQUARE_SIZE;
+        int newNodeY = posY / SQUARE_SIZE;
         sprite.setPosition(posX, posY);
-        if(node.getX() != newNodeX || node.getY() != newNodeY){  //Ritorna vero se le coordinate del nodo sono cambiate
+        if (node.getX() != newNodeX ||
+            node.getY() != newNodeY) {  //Ritorna vero se le coordinate del nodo sono cambiate
             node.setX(newNodeX);
             node.setY(newNodeY);
             return true;
         }
-        else
-            return false;
     }
-    else {
-        return false;
-    }
+    return false;
 }
 
 bool Hero::isColliding(float x, float y)const {  //x e y indicano lo spostamento che si vuole compiere

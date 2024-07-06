@@ -22,8 +22,6 @@ private:
     int y;
     int GetGrid(int x, int y) const; //Se una coordinata è fuori dalla griglia è come se fosse un ostacolo
 public:
-    //TODO renderli privati
-    //static int* worldGrid; //La griglia che indica dove sono gli ostacoli
     static NumberGrid numberGrid;
     GridNode(): x(0), y(0){}
     GridNode(int px, int py) : x(px), y(py){}

@@ -8,6 +8,8 @@
 #include<SFML/Graphics.hpp>
 #include<exception>
 
+class Hero;
+class Enemy;
 class Path {
 private:
     unsigned int index;
@@ -21,6 +23,7 @@ public:
     sf::Vector2i& getElement(){return path[index];}
     unsigned int getIndex() const{return index;}
     bool isFinished() const;
+    bool isNodeReached(const Enemy &enemy) const;
 };
 
 

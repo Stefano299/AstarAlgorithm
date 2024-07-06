@@ -4,6 +4,13 @@
 
 #include "Path.h"
 #include"exceptions.h"
+#include"Hero.h"
+#include"Enemy.h"
+#include"constants.h"
+
+bool isNear(float a, float b) {
+    return(abs(a - b) < (float) constants::SQUARE_SIZE / 2);
+}
 
 void Path::nextNode() {
     if (index < path.size())
@@ -13,8 +20,11 @@ void Path::nextNode() {
 }
 
 bool Path::isFinished() const {
-    if (index >= path.size() - 1)
-        return true;
-    else
-        return false;
+    return (index >= path.size() - 1);
+}
+
+bool Path::isNodeReached(const Enemy &enemy) const{ //Ritorna vero se enemy ha raggiunto il nodo del percorso  che aveva come obbiettivo
+    return (isNear(enemy.getPosX(), path[index].x * constants::SQUARE_SIZE) &&
+            isNear(enemy.getPosY(), path[index].y * constants::SQUARE_SIZE));
+
 }
