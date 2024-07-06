@@ -123,7 +123,6 @@ int main() {
         Hero hero(1800, 700, 8, "../img/hero.png");
         Enemy enemy(70, 700, 5, "../img/enemy.png");
         Path pathState;
-        enemy.moving = false;
         while (window.isOpen()) {
             try {
                 handleEvents(window, squareGrid);  //Per aggiunta/rimozione ostacoli con il mouse
@@ -136,22 +135,22 @@ int main() {
                     if (isDistantEnough(hero, enemy)) {
                         try {
                             pathState = newPath(squareGrid, enemy, hero);  //Calcolo e salvo un nuovo percorso
-                            enemy.moving = true;  //Se è stato trovato un percorso voglio che enemy si muova
+                            enemy.startMovement(); //Se è stato trovato un percorso voglio che enemy si muova
                         } catch (path_not_found &e) {  //Se il percorso non viene trovato voglio che il programma non si fermi, e ne venga poi cercato un altro
                             std::cout << e.what() << std::endl;
                         }
                     } else {    //Se hero si muove ma è molto vicino a enemy non voglio venga calcolato un percorso, fermo quindi enemy
-                        enemy.moving = false;
+                        enemy.stop();
                         squareGrid.resetPath();  //Tolgo il disegno dell'ultimo percorso trovato
                     }
                 }
-                if (enemy.moving) {
+                if (enemy.isMovementStarted()) {  //Se enemy si deve muovere
                     enemy.move(pathState.getElement().x, pathState.getElement().y); //Muovo enemy al nodo (più vicino) del percorso trovato
                     if(nodeReached(hero, enemy, pathState)) {  //Controllo se enemy ha raggiunto il nodo del suo percorso
                         nextPathNode(hero, enemy, pathState, squareGrid);  //se lo ha raggiunto voglio passare al nodo successivo del percorso
                     } else if (!isDistantEnough(hero, enemy) || pathState.isFinished()) {
                         //Se sono vicini o se il percorso è finito fermo enemy e rimuovo il percorso disegnato
-                        enemy.moving = false;
+                        enemy.startMovement();
                         squareGrid.resetPath();
                     }
                 }

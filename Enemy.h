@@ -8,9 +8,13 @@
 #include"GameCharacter.h"
 
 class Enemy: public GameCharacter {
+private:
+    bool moving;
 public:
-    bool moving; //non ho motivo di renderla privata. Il codice diventerebbe molto difficile da leggere nel main
     Enemy(float x, float y, float speed, const string& txtPath):  GameCharacter(x, y, speed, txtPath, false){}
+    bool isMovementStarted() const{return true;}
+    void stop(){moving = false;}
+    void startMovement(){moving = true;}
     bool move(float x, float y) override;
 };
 
