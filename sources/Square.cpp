@@ -9,7 +9,7 @@
 /*Sarebbe inutile fare sì che ogni quadrato abbia un diverso colore, in quanto questi consumano memoria
  e sono più o meno uguali per tutti. Perciò creo una mappa statica: questi vengono allocati una sola volta
  e ad ogni quadrato viene associato il suo.*/
-std::map<Type, sf::Color> Square::colors = {{Type::Basic, sf::Color::White},
+const std::map<Type, sf::Color> Square::colors = {{Type::Basic, sf::Color::White},
                                             {Type::Obstacle, sf::Color(128,128,128)},
                                             {Type::Path, sf::Color(255, 140, 140)}};
 

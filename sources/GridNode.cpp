@@ -93,14 +93,15 @@ float GridNode::GetCost(const GridNode &successor) const{ //Il costo del movimen
     }
 }
 
-vector<sf::Vector2i> GridNode::getPath(GridNode &nodeStart,GridNode &nodeEnd){
+vector<sf::Vector2i> GridNode::getPath(const GridNode &nodeStart,const GridNode &nodeEnd){
     vector<sf::Vector2i> path;
     AStarSearch<GridNode> astarsearch;
     unsigned int SearchCount = 0;
     const unsigned int NumSearches = 1;
     while (SearchCount < NumSearches) {
-        astarsearch.SetStartAndGoalStates(nodeStart, nodeEnd);  //Imposto il nodo di partenza e di arrivo
-
+        /*Imposto il nodo di partenza e di arrivo
+        //Faccio il const cast di nodeStart e nodeEnd perchè la libreria AStarSearch non accetta i nodi costanti*/
+        astarsearch.SetStartAndGoalStates(const_cast<GridNode &>(nodeStart), const_cast<GridNode &>(nodeEnd));
         unsigned int SearchState;
         unsigned int SearchSteps = 0;  //Conto i passi fatti per trovare il percorso
 

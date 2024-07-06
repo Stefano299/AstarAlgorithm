@@ -18,7 +18,7 @@ enum class Type{   //Enumerazione dei possibili tipo di quadrato
 
 class Square {
 private:
-    static std::map<Type, sf::Color> colors;
+    const static std::map<Type, sf::Color> colors;
     sf::RectangleShape shape;
     Type type;
     int x;   //Posizioni nella griglia

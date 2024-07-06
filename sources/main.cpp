@@ -18,11 +18,11 @@ void initWindow(sf::RenderWindow &window);
 void removeObstacle(int posX, int posY, SquareGrid &squareGrid, NumberGrid &numberGrid);
 void addObstacle(int posX, int posY, SquareGrid &squareGrid, NumberGrid &numberGrid);
 void handleEvents(sf::RenderWindow &window, SquareGrid &squareGrid);
-void handleEnemyMovement(SquareGrid &squareGrid, Hero &hero, Enemy &enemy);
+void handleEnemyMovement(SquareGrid &squareGrid,const Hero &hero, Enemy &enemy);
 void handleHeroMovement(Hero& hero);
 void update(sf::RenderWindow &window, const SquareGrid &squareGrid, const GameCharacter &hero, const GameCharacter &enemy);
-Path newPath(SquareGrid &squareGrid, GameCharacter &enemy, GameCharacter &hero);
-void nextPathNode(const Hero &hero, Enemy &enemy, Path &pathState, SquareGrid &squareGrid);
+Path newPath(SquareGrid &squareGrid, const GameCharacter &enemy, const GameCharacter &hero);
+void nextPathNode(Path &pathState, SquareGrid &squareGrid);
 bool isDistantEnough(const GameCharacter &hero, const GameCharacter &enemy);
 
 
@@ -116,9 +116,9 @@ void handleHeroMovement(Hero& hero) {
     hero.move(dx, dy);  //Passo a move la direzione in cui hero si deve muovere, normalizzando (in caso) il vettore spostamento
 }
 
-Path newPath(SquareGrid &squareGrid, GameCharacter &enemy, GameCharacter &hero) { //Calcolo un nuovo percorso da enemy a hero
-    GridNode heroNode = hero.getNode();  //Imposto i nodi di enemy e hero come inizio e fine del percorso da trovare
-    GridNode enemyNode = enemy.getNode();
+Path newPath(SquareGrid &squareGrid, const GameCharacter &enemy, const GameCharacter &hero) { //Calcolo un nuovo percorso da enemy a hero
+    const GridNode& heroNode = hero.getNode();  //Imposto i nodi di enemy e hero come inizio e fine del percorso da trovare
+    const GridNode& enemyNode = enemy.getNode();
     Path pathToHero;
     pathToHero.setPath(GridNode::getPath(enemyNode, heroNode));  //Do all'oggetto Path il percorso calcolato
     pathToHero.reset();
@@ -131,13 +131,13 @@ Path newPath(SquareGrid &squareGrid, GameCharacter &enemy, GameCharacter &hero) 
 
 
 
-void nextPathNode(const Hero &hero, Enemy &enemy, Path &pathState, SquareGrid &squareGrid) { //Per passare al nodo successivo del percorso
+void nextPathNode(Enemy &enemy, Path &pathState, SquareGrid &squareGrid) { //Per passare al nodo successivo del percorso
     enemy.setNode(pathState.getElement().x, pathState.getElement().y);  //Voglio aggiornare il nodo di enemy, e quindi il nodo di inizio dei prossimi percorsi
     squareGrid.changeElementType(pathState.getElement().x,pathState.getElement().y, Type::Basic);      //Tolgo il disegno del tracciato per il nodo appena percorso
     pathState.nextNode();
 }
 
-void handleEnemyMovement(SquareGrid &squareGrid, Hero &hero, Enemy &enemy) {
+void handleEnemyMovement(SquareGrid &squareGrid,const Hero &hero, Enemy &enemy) {
     /*Voglio trovare un nuovo percorso se è cambiata la posizione del nodo di hero o anche se
     enemy ha finito di percorrere l'ultimo percorso calcolato (sennò hero potrebbe rimanere fermo
     e non verrebbe calcolato nessun nuovo percorso, in caso agli ultimi movimenti di hero non siano stati trovati
@@ -160,7 +160,7 @@ void handleEnemyMovement(SquareGrid &squareGrid, Hero &hero, Enemy &enemy) {
         enemy.move(pathToHero.getElement().x, pathToHero.getElement().y); //Muovo enemy al nodo (più vicino) del percorso trovato
         //Controllo se enemy ha raggiunto il nodo del suo percorso, se è abbastanza lontano e si assicura il percorso non sia terminato
         if(pathToHero.isNodeReached(enemy) && isDistantEnough(hero, enemy) && !pathToHero.isFinished()) {
-            nextPathNode(hero, enemy, pathToHero, squareGrid);  //se le condizioni sono verificate voglio passare al nodo successivo del percorso
+            nextPathNode(enemy, pathToHero, squareGrid);  //se le condizioni sono verificate voglio passare al nodo successivo del percorso
         } else if (!isDistantEnough(hero, enemy) || pathToHero.isFinished()) {
             //Se sono vicini o se il percorso è finito fermo enemy e rimuovo il percorso disegnato
             enemy.startMovement();

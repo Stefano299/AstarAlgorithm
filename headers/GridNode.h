@@ -35,7 +35,7 @@ public:
     float GetCost(const GridNode &successor) const;
     bool IsSameState(const GridNode &rhs) const;
     size_t Hash() const;
-    static vector<sf::Vector2i> getPath(GridNode &nodeStart,GridNode &nodeEnd);
+    static vector<sf::Vector2i> getPath(const GridNode &nodeStart, const GridNode &nodeEnd);
 };
 
 
