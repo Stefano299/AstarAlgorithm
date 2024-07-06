@@ -12,6 +12,7 @@
 
 enum class Type;
 class Square;
+
 class SquareGrid: public Grid {
 private:
     Square* squares;  //Griglia di quadrati (intesi come forme geometriche disegnabili)

@@ -2,9 +2,8 @@
 // Created by stefano on 7/3/24.
 //
 
-#include"headers/GameCharacter.h"
-#include"headers/constants.h"
-#include"headers/exceptions.h"
+#include"../headers/GameCharacter.h"
+#include"../headers/exceptions.h"
 
 using namespace constants;
 

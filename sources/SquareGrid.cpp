@@ -4,10 +4,9 @@
 
 #include<exception>
 
-#include"headers/SquareGrid.h"
-#include"headers/Square.h"
-#include"headers/constants.h"
-#include"headers/exceptions.h"
+#include"../headers/SquareGrid.h"
+#include"../headers/Square.h"
+#include"../headers/exceptions.h"
 
 using namespace constants;
 

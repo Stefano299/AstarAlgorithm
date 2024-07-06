@@ -2,8 +2,7 @@
 // Created by stefano on 7/4/24.
 //
 
-#include"headers/Enemy.h"
-#include"headers/constants.h"
+#include"../headers/Enemy.h"
 
 using namespace constants;
 

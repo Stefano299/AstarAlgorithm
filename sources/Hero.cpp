@@ -2,9 +2,7 @@
 // Created by stefano on 7/4/24.
 //
 
-#include"headers/Hero.h"
-#include"headers/GridNode.h"
-#include"headers/constants.h"
+#include"../headers/Hero.h"
 
 using namespace constants;
 

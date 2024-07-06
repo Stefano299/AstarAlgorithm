@@ -1,16 +1,16 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
-#include "headers/constants.h"
-#include "headers/Square.h"
-#include "headers/NumberGrid.h"
-#include "headers/SquareGrid.h"
-#include "headers/GridNode.h"
-#include "headers/GameCharacter.h"
-#include "headers/Hero.h"
-#include "headers/Enemy.h"
-#include "headers/exceptions.h"
-#include"headers/Path.h"
+#include "../headers/constants.h"
+#include "../headers/Square.h"
+#include "../headers/NumberGrid.h"
+#include "../headers/SquareGrid.h"
+#include "../headers/GridNode.h"
+#include "../headers/GameCharacter.h"
+#include "../headers/Hero.h"
+#include "../headers/Enemy.h"
+#include "../headers/exceptions.h"
+#include"../headers/Path.h"
 
 using namespace constants;
 

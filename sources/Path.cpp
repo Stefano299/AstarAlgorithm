@@ -2,11 +2,10 @@
 // Created by stefano on 7/5/24.
 //
 
-#include "headers/Path.h"
-#include"headers/exceptions.h"
-#include"headers/Hero.h"
-#include"headers/Enemy.h"
-#include"headers/constants.h"
+#include "../headers/Path.h"
+#include"../headers/exceptions.h"
+#include"../headers/Hero.h"
+#include"../headers/Enemy.h"
 
 bool isNear(float a, float b) {
     return(abs(a - b) < (float) constants::SQUARE_SIZE / 2);
