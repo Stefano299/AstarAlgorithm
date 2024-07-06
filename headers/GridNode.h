@@ -20,7 +20,7 @@ class GridNode {   //Classe che rappresenta un nodo della mia griglia
 private:
     int x;
     int y;
-    int GetGrid(int x, int y) const; //Se una coordinata è fuori dalla griglia è come se fosse un ostacolo
+    int GetGrid(int x, int y) const; //Restituisce il valore della casella in posizione x, y
 public:
     static NumberGrid numberGrid;
     GridNode(): x(0), y(0){}

@@ -26,7 +26,7 @@ void GridNode::setY(int y) {
 
 int GridNode::GetGrid(int x, int y) const {
     if (x < 0 || x >= GRID_WIDTH || y < 0 || y >= GRID_HEIGHT) {
-        return 9;  //Fuori dalla finestra non èuò andare, come se fosse un ostacolo
+        return 9;  //Fuori dalla finestra non può andare, come se fosse un ostacolo
     }
     return numberGrid.getNumber(x,y);
 }

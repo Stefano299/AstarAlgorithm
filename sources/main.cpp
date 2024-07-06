@@ -32,13 +32,13 @@ int main() {
     sf::RenderWindow window;
     initWindow(window);
     try {
-        Hero hero(1800, 700, 8, "../assets/hero.png");
-        Enemy enemy(70, 700, 5, "../assets/enemy.png");
+        Hero hero(SCREEN_WIDTH-50, SCREEN_HEIGHT/2, 8, "../assets/hero.png");
+        Enemy enemy(50, SCREEN_HEIGHT/2, 5, "../assets/enemy.png");
         while (window.isOpen()) {
             try {
                 handleEvents(window, squareGrid);  //Per aggiunta/rimozione ostacoli con il mouse
-                handleHeroMovement(hero);
-                handleEnemyMovement(squareGrid, hero, enemy);
+                handleHeroMovement(hero);  //per muovere hero cons WASD
+                handleEnemyMovement(squareGrid, hero, enemy); //Per fare muovere enemy lungo il percorso trovato
                 update(window, squareGrid, hero, enemy);  //Aggiorno la finestra
                 /* Se un blocco è posizionato fuori dalla finestra il programma continua al loop successivo
                 non voglio che il programma termini*/
@@ -117,10 +117,9 @@ void handleHeroMovement(Hero& hero) {
 }
 
 Path newPath(SquareGrid &squareGrid, const GameCharacter &enemy, const GameCharacter &hero) { //Calcolo un nuovo percorso da enemy a hero
-    const GridNode& heroNode = hero.getNode();  //Imposto i nodi di enemy e hero come inizio e fine del percorso da trovare
-    const GridNode& enemyNode = enemy.getNode();
     Path pathToHero;
-    pathToHero.setPath(GridNode::getPath(enemyNode, heroNode));  //Do all'oggetto Path il percorso calcolato
+    //Calcolo il percorso dal nodo di enemy al nodo di hero
+    pathToHero.setPath(GridNode::getPath(enemy.getNode(), hero.getNode()));  //Do all'oggetto Path il percorso calcolato
     pathToHero.reset();
     squareGrid.resetPath();  //Una volta trovato un nuovo percorso cancello quello becchio
     for (auto &node : pathToHero.getPath()) {  //Disegno il nuovo percorso trovato
@@ -163,14 +162,14 @@ void handleEnemyMovement(SquareGrid &squareGrid,const Hero &hero, Enemy &enemy) 
             nextPathNode(enemy, pathToHero, squareGrid);  //se le condizioni sono verificate voglio passare al nodo successivo del percorso
         } else if (!isDistantEnough(hero, enemy) || pathToHero.isFinished()) {
             //Se sono vicini o se il percorso è finito fermo enemy e rimuovo il percorso disegnato
-            enemy.startMovement();
+            enemy.stop();
             squareGrid.resetPath();
         }
     }
 }
 
 void update(sf::RenderWindow &window, const SquareGrid &squareGrid, const GameCharacter &hero, const GameCharacter &enemy) {  //Aggiorna la finestra alla fine del (game) loop
-    window.clear(sf::Color::White);
+    window.clear();
     squareGrid.draw(window);
     hero.draw(window);
     enemy.draw(window);
