@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../GridNode.h"
+#include "../headers/GridNode.h"
 
 class GridNodeTest : public ::testing::Test {
 protected:

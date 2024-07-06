@@ -1,8 +1,8 @@
 #include "gtest/gtest.h"
-#include "../Square.h"
-#include "../constants.h"
-#include "../SquareGrid.h"
-#include"../exceptions.h"
+#include "../headers/Square.h"
+#include "../headers/constants.h"
+#include "../headers/SquareGrid.h"
+#include"../headers/exceptions.h"
 
 class SquareGridTest : public ::testing::Test {
 protected:
@@ -18,19 +18,19 @@ protected:
 };
 
 TEST_F(SquareGridTest, DefaultConstructor) {
-    EXPECT_EQ(grid->getHeight(), constants::GRID_HEIGHT);
-    EXPECT_EQ(grid->getWidth(), constants::GRID_WIDTH);
+    ASSERT_EQ(grid->getHeight(), constants::GRID_HEIGHT);
+    ASSERT_EQ(grid->getWidth(), constants::GRID_WIDTH);
 }
 
 TEST_F(SquareGridTest, SquaresGeneration){
-    EXPECT_EQ(7, grid->getSquare(7, 3).getX());
+    ASSERT_EQ(7, grid->getSquare(7, 3).getX());
 }
 
 TEST_F(SquareGridTest, GetSquareException) {
-    EXPECT_THROW(grid->getSquare(-1, 0), invalid_coordinates);
+    ASSERT_THROW(grid->getSquare(-1, 0), invalid_coordinates);
 }
 
 TEST_F(SquareGridTest, GetElementType){
     grid->changeElementType(2, 4, Type::Obstacle);
-    EXPECT_EQ(grid->getSquare(2, 4).getType(), Type::Obstacle);
+    ASSERT_EQ(grid->getSquare(2, 4).getType(), Type::Obstacle);
 }

@@ -2,9 +2,9 @@
 // Created by stefano on 7/4/24.
 //
 
-#include"Hero.h"
-#include"GridNode.h"
-#include"constants.h"
+#include"headers/Hero.h"
+#include"headers/GridNode.h"
+#include"headers/constants.h"
 
 using namespace constants;
 
@@ -17,7 +17,7 @@ int sign(float x){  //Per prendere il segno di un float
         return -1;
 }
 
-bool Hero::move(float x, float y) {  //Si sposta d x e y rispetto al sua posizione corrente
+void Hero::move(float x, float y) {  //Si sposta d x e y rispetto al sua posizione corrente
     if(!isColliding(x, y)) {     //Il mio personaggio non può attraversare i muri...
         float length = sqrt(x * x + y * y);  //Normalizzo il vettore così da non andare più veloce in diagonale
         if (length > 0) {
@@ -30,13 +30,13 @@ bool Hero::move(float x, float y) {  //Si sposta d x e y rispetto al sua posizio
         int newNodeY = posY / SQUARE_SIZE;
         sprite.setPosition(posX, posY);
         if (node.getX() != newNodeX ||
-            node.getY() != newNodeY) {  //Ritorna vero se le coordinate del nodo sono cambiate
+            node.getY() != newNodeY) {
             node.setX(newNodeX);
             node.setY(newNodeY);
-            return true;
-        }
+            nodeChanged = true;
+        }else
+            nodeChanged = false;
     }
-    return false;
 }
 
 bool Hero::isColliding(float x, float y)const {  //x e y indicano lo spostamento che si vuole compiere

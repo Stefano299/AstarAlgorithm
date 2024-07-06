@@ -2,24 +2,24 @@
 // Created by stefano on 7/5/24.
 //
 
-#include "Path.h"
-#include"exceptions.h"
-#include"Hero.h"
-#include"Enemy.h"
-#include"constants.h"
+#include "headers/Path.h"
+#include"headers/exceptions.h"
+#include"headers/Hero.h"
+#include"headers/Enemy.h"
+#include"headers/constants.h"
 
 bool isNear(float a, float b) {
     return(abs(a - b) < (float) constants::SQUARE_SIZE / 2);
 }
 
 void Path::nextNode() {
-    if (index < path.size())
+    if (index < path.size())  //Passa al prossimo nodo del percorso
         index++;
     else
         throw path_out_of_bound("Tentato accesso al path con un indice non valido");
 }
 
-bool Path::isFinished() const {
+bool Path::isFinished() const { //Ritorna vero se si è alla fine del percorso
     return (index >= path.size() - 1);
 }
 

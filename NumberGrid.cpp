@@ -2,11 +2,11 @@
 // Created by stefano on 7/3/24.
 //
 
-#include"NumberGrid.h"
-#include"constants.h"
-#include"Square.h"
-#include"GridNode.h"
-#include "exceptions.h"
+#include"headers/NumberGrid.h"
+#include"headers/constants.h"
+#include"headers/Square.h"
+#include"headers/GridNode.h"
+#include "headers/exceptions.h"
 
 using namespace constants;
 

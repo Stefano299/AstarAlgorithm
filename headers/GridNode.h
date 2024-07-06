@@ -10,7 +10,7 @@
 #include<math.h>
 #include<SFML/Graphics.hpp>
 
-#include"astar/stlastar.h"
+#include"../astar/stlastar.h"
 #include"constants.h"
 #include"NumberGrid.h"
 

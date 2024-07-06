@@ -2,12 +2,12 @@
 // Created by stefano on 7/4/24.
 //
 
-#include"Enemy.h"
-#include"constants.h"
+#include"headers/Enemy.h"
+#include"headers/constants.h"
 
 using namespace constants;
 
-bool Enemy::move(float x, float y){   //Va ad una determinata coordinata (x, y)
+void Enemy::move(float x, float y){   //Va ad una determinata coordinata (x, y)
     sprite.move(x*SQUARE_SIZE, y*SQUARE_SIZE);
     float dx = (float)x*SQUARE_SIZE-posX;  //Differenze di posizione
     float dy = (float)y*SQUARE_SIZE-posY;
@@ -17,5 +17,4 @@ bool Enemy::move(float x, float y){   //Va ad una determinata coordinata (x, y)
     posX += speed*cosx;
     posY += speed*senx;
     sprite.setPosition(posX, posY);  //SI muove un passo alla volta
-    return true; //Inutile nell'enemy, ma deve ritornare un booleano perchè serve in Hero (e move è un metodo della classe base quindi devono avere stesso tipo di ritorno)
 }

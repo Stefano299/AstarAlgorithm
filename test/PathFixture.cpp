@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
-#include "../Path.h"
-#include "../exceptions.h"
+#include "../headers/Path.h"
+#include "../headers/exceptions.h"
 class PathFixture : public ::testing::Test {
 protected:
     Path* path;

@@ -15,7 +15,7 @@ public:
     bool isMovementStarted() const{return moving;}
     void stop(){moving = false;}
     void startMovement(){moving = true;}
-    bool move(float x, float y) override;
+    void move(float x, float y) override;
 };
 
 

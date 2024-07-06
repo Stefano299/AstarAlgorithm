@@ -3,9 +3,9 @@
 //
 
 #include "gtest/gtest.h"
-#include "../Square.h"
-#include"../constants.h"
-#include"../exceptions.h"
+#include "../headers/Square.h"
+#include"../headers/constants.h"
+#include"../headers/exceptions.h"
 
 class SquareTest : public ::testing::Test {
 protected:
@@ -21,30 +21,30 @@ protected:
 };
 
 TEST_F(SquareTest, DefaultConstructor) {
-    EXPECT_EQ(square->getType(), Type::Basic);
+    ASSERT_EQ(square->getType(), Type::Basic);
 }
 
 TEST_F(SquareTest, GetShape) {
     sf::RectangleShape shape = square->getShape();
-    EXPECT_TRUE(shape.getFillColor() == sf::Color::White);
+    ASSERT_TRUE(shape.getFillColor() == sf::Color::White);
 }
 
 TEST_F(SquareTest, GetSize) {
-    EXPECT_EQ(square->getSize(), constants::SQUARE_SIZE);
+    ASSERT_EQ(square->getSize(), constants::SQUARE_SIZE);
 }
 
 
 TEST_F(SquareTest, SetTypeAndGetType) {
     square->setType(Type::Obstacle);
-    EXPECT_EQ(square->getType(), Type::Obstacle);
+    ASSERT_EQ(square->getType(), Type::Obstacle);
 }
 
 TEST_F(SquareTest, SetPosPositive) {
     square->setPos(5, 7);
-    EXPECT_EQ(square->getX(), 5);
-    EXPECT_EQ(square->getY(), 7);
+    ASSERT_EQ(square->getX(), 5);
+    ASSERT_EQ(square->getY(), 7);
 }
 
 TEST_F(SquareTest, SetPosNegative) {
-    EXPECT_THROW(square->setPos(-3, -4), invalid_coordinates);
+    ASSERT_THROW(square->setPos(-3, -4), invalid_coordinates);
 }

@@ -10,10 +10,11 @@
 class Hero : public GameCharacter{
 private:
     bool isColliding(float x, float y) const; //Per controllare se è in collisione con un ostacolo/parete, x e y indicanno lo spostamento che si vuole compiere
+    bool nodeChanged; //Indica se le coordinate del nodo sono cambiate
 public:
     Hero(float x, float y, float speed, const string& txtPath):  GameCharacter(x, y, speed, txtPath, true){}
-    bool move(float x, float y) override;  //Si muove di x e y, ritorna un booleano che indica se sono cambiate le coordinate del nodo
-
+    void move(float x, float y) override;
+    bool isNodeChanged() const{return nodeChanged;} //Ritorna vero se il nodo di hero è cambiato, e bisogna quindi trovare un nuovo percorso
 };
 
 

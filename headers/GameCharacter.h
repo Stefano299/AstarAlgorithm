@@ -20,7 +20,7 @@ protected:
 public:
     GameCharacter(float x, float y, float speed, const string& txtPath, bool centerOrigin = false);
     virtual ~GameCharacter() = default;
-    virtual bool move(float x, float y) = 0;   //Si muove in una posizione INDICATA SULLA GRIGLIA
+    virtual void move(float x, float y) = 0;   //Si muove in una posizione INDICATA SULLA GRIGLIA
     void draw(sf::RenderWindow& window) const;
     const GridNode& getNode() const{return node;}
     float getPosY() const {return posY;}

@@ -4,9 +4,9 @@
 
 #include<iostream>
 
-#include"Square.h"
-#include"constants.h"
-#include"exceptions.h"
+#include"headers/Square.h"
+#include"headers/constants.h"
+#include"headers/exceptions.h"
 /*Sarebbe inutile fare sì che ogni quadrato abbia un diverso colore, in quanto questi consumano memoria
  e sono più o meno uguali per tutti. Perciò creo una mappa statica: questi vengono allocati una sola volta
  e ad ogni quadrato viene associato il suo.*/

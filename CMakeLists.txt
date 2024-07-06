@@ -4,31 +4,31 @@ project(Astar)
 set(CMAKE_CXX_STANDARD 11)
 find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)
 
-add_subdirectory(test)
+include_directories(headers/)
 
 set(SOURCE_FILES main.cpp
         Square.cpp
-        Square.h
+        headers/Square.h
         SquareGrid.cpp
-        SquareGrid.h
-        constants.h
+        headers/SquareGrid.h
+        headers/constants.h
         GridNode.cpp
-        GridNode.h
+        headers/GridNode.h
         astar/stlastar.h
         astar/fsa.h
-        Grid.h
+        headers/Grid.h
         NumberGrid.cpp
-        NumberGrid.h
+        headers/NumberGrid.h
         Grid.cpp
         GameCharacter.cpp
-        GameCharacter.h
+        headers/GameCharacter.h
         Hero.cpp
-        Hero.h
+        headers/Hero.h
         Enemy.cpp
-        Enemy.h
-        exceptions.h
+        headers/Enemy.h
+        headers/exceptions.h
         Path.cpp
-        Path.h)
+        headers/Path.h)
 
 # Link alle librerie Astar
 add_executable(Astar ${SOURCE_FILES}

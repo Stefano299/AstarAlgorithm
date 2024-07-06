@@ -2,9 +2,9 @@
 #include<stdexcept>
 #include<iostream>
 
-#include"GridNode.h"
-#include"exceptions.h"
-#include"constants.h"
+#include"headers/GridNode.h"
+#include"headers/exceptions.h"
+#include"headers/constants.h"
 
 using namespace std;
 using namespace constants;

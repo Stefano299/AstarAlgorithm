@@ -3,14 +3,14 @@
 //
 
 #include"gtest/gtest.h"
-#include"../Enemy.h"
+#include"../headers/Enemy.h"
 
 class EnemyFixture : public ::testing::Test {
 protected:
     Enemy* enemy;
 
     void SetUp() override {
-        enemy = new Enemy(100.0f, 200.0f, 2.5f, "../../img/enemy.png");
+        enemy = new Enemy(100.0f, 200.0f, 2.5f, "../../assets/enemy.png");
     }
     void TearDown() override{
         delete enemy;
@@ -24,7 +24,7 @@ TEST_F(EnemyFixture, EnemyConstructor) {
 }
 
 TEST_F(EnemyFixture, EnemyMove) {
-    Enemy enemy(100.0f, 200.0f, 2.5f, "../../img/enemy.png");
+    Enemy enemy(100.0f, 200.0f, 2.5f, "../../assets/enemy.png");
     enemy.move(150.0f, 250.0f);
     ASSERT_FLOAT_EQ(enemy.getPosX(), 101.29144);
     ASSERT_FLOAT_EQ(enemy.getPosY(), 202.14061);
