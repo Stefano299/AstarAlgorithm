@@ -25,10 +25,6 @@ public:
     static NumberGrid numberGrid;
     GridNode(): x(0), y(0){}
     GridNode(int px, int py) : x(px), y(py){}
-    void setX(int x);
-    void setY(int y);
-    int getX() const{return x;}
-    int getY() const{return y;}
     float GoalDistanceEstimate(const GridNode &nodeGoal) const;
     bool IsGoal(const GridNode &nodeGoal) const;
     bool GetSuccessors(AStarSearch<GridNode> *astarsearch, GridNode *parent_node) const;
@@ -36,6 +32,10 @@ public:
     bool IsSameState(const GridNode &rhs) const;
     size_t Hash() const;
     static vector<sf::Vector2i> getPath(const GridNode &nodeStart, const GridNode &nodeEnd);
+    void setX(int x);
+    void setY(int y);
+    int getX() const{return x;}
+    int getY() const{return y;}
 };
 
 

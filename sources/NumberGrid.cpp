@@ -37,3 +37,25 @@ int NumberGrid::getNumber(int x, int y) const {
     else
         throw invalid_coordinates("Coordinate del numero non valide");
 }
+
+NumberGrid &NumberGrid::operator=(const NumberGrid &right) {
+    if(this == &right) {
+        delete[] numbers;
+        width = right.width;
+        height = right.height;
+        numbers = new int[width*height];
+        for(int i = 0; i < width*height; i++){
+            numbers[i] = right.numbers[i];
+        }
+    }
+    return *this;
+}
+
+NumberGrid::NumberGrid(const NumberGrid &original) {
+    width = original.width;
+    height = original.height;
+    numbers = new int[width*height];
+    for(int i = 0; i < width*height; i++){
+        numbers[i] = original.numbers[i];
+    }
+}

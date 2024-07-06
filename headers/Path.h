@@ -12,18 +12,18 @@ class Hero;
 class Enemy;
 class Path {
 private:
-    unsigned int index;
+    int index;
     std::vector<sf::Vector2i> path;
 public:
     Path():index(0){}
-    void reset(){index = 0;}
     void nextNode();
+    void reset(){index = 0;}
     const std::vector<sf::Vector2i>& getPath() const{return path;}
     void setPath(std::vector<sf::Vector2i> p){path = p;}
     sf::Vector2i& getElement(){return path[index];}
-    unsigned int getIndex() const{return index;}
     bool isFinished() const;
     bool isNodeReached(const Enemy &enemy) const;
+    int getIndex() const{return index;}
 };
 
 

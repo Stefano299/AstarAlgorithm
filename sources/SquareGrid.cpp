@@ -53,3 +53,25 @@ void SquareGrid::resetPath() {  //Riporta i blocchi del percorsoallo stato inizi
         }
     }
 }
+
+SquareGrid &SquareGrid::operator=(const SquareGrid &right) {
+    if(this == &right) {
+        delete[] squares;
+        width = right.width;
+        height = right.height;
+        squares = new Square[width * height];
+        for (int i = 0; i < width * height; i++) {
+            squares[i] = right.squares[i];
+        }
+    }
+    return *this;
+}
+
+SquareGrid::SquareGrid(const SquareGrid &original){
+    width = original.width;
+    height = original.height;
+    squares = new Square[width*height];
+    for(int i = 0; i < width*height; i++){
+        squares[i] = original.squares[i];
+    }
+}

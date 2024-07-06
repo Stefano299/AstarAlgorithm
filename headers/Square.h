@@ -28,11 +28,11 @@ public:
     Square(Type t = Type::Basic, float s = constants::SQUARE_SIZE, int x = 0, int y = 0);
     const sf::RectangleShape& getShape() const;
     float getSize() const{return size;}
+    Type getType() const;
     void setType(Type type);
     void setPos(int x, int y);
     int getX() const{return x;}
     int getY() const{return y;}
-    Type getType() const;
 };
 
 

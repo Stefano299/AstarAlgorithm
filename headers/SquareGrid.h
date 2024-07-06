@@ -23,6 +23,9 @@ public:
     void draw(sf::RenderWindow& window) const;
     void changeElementType(int x, int y, Type type) override;
     const Square& getSquare(int x, int y) const;
+    //Operatore di assegnazione e costruttore di copia
+    SquareGrid& operator=(const SquareGrid& right);
+    SquareGrid(const SquareGrid &original);
 };
 
 

@@ -23,10 +23,10 @@ public:
     virtual void move(float x, float y) = 0;   //Si muove in una posizione INDICATA SULLA GRIGLIA
     void draw(sf::RenderWindow& window) const;
     const GridNode& getNode() const{return node;}
+    void setNode(int x, int y);
     float getPosY() const {return posY;}
     float getPosX() const {return posX;}
     float getSpeed() const{return speed;}
-    void setNode(int x, int y);
 };
 
 
