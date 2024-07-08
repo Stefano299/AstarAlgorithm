@@ -12,10 +12,10 @@ bool isNear(float a, float b) {
 }
 
 void Path::nextNode() {
-    if (index < path.size() && index > 0)  //Passa al prossimo nodo del percorso
+    if (index < path.size() && index >= 0)  //Passa al prossimo nodo del percorso
         index++;
     else
-        throw path_out_of_bound("Tentato accesso al path con un indice non valido");
+        throw path_out_of_bound("Tentato accesso a path con un indice non valido");
 }
 
 bool Path::isFinished() const { //Ritorna vero se si è alla fine del percorso

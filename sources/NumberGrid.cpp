@@ -39,7 +39,7 @@ int NumberGrid::getNumber(int x, int y) const {
 }
 
 NumberGrid &NumberGrid::operator=(const NumberGrid &right) {
-    if(this == &right) {
+    if(this != &right) {
         delete[] numbers;
         width = right.width;
         height = right.height;
