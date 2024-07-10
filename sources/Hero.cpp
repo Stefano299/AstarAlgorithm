@@ -38,6 +38,7 @@ void Hero::move(float x, float y) {  //Si sposta d x e y rispetto al sua posizio
 }
 
 bool Hero::isColliding(float x, float y)const {  //x e y indicano lo spostamento che si vuole compiere
+    bool collision = false;
     float fx = x*speed;
     float fy = y*speed;
     float originPos = (float)SQUARE_SIZE/2; //Posizione dell'origine rispetto al personaggio (è al centro)
@@ -48,12 +49,11 @@ bool Hero::isColliding(float x, float y)const {  //x e y indicano lo spostamento
     float futureX = (posX + fx +originPos*sign(x))/SQUARE_SIZE; //Controllo un po' più avanti rispetto alla mia posizione
     float futureY = (posY + fy + originPos*sign(y))/SQUARE_SIZE;
     if(futureX >= GRID_WIDTH || futureY >= GRID_HEIGHT || futureX < 0 || futureY < 0) //Per non farlo uscire dalla finestra
-        return true;
+        collision = true;
     if(GridNode::numberGrid.getNumber(futureX, futureY) == 9) //Controllo che in una casella vicina non ci sia un ostacolo
-        return true;
+        collision = true;
     if(GridNode::numberGrid.getNumber(futureX-sign(x), futureY) == 9 && GridNode::numberGrid.getNumber(futureX, futureY-sign(y))) //NON PUO' PASSARE NEGLIA ANGOLI
-        return true;
-    else
-        return false;
+        collision = true;
+    return collision;
 }
 
