@@ -32,8 +32,8 @@ int main() {
     sf::RenderWindow window;
     initWindow(window);
     try {
-        Hero hero(SCREEN_WIDTH-50, SCREEN_HEIGHT/2, 8, "../assets/hero.png");
-        Enemy enemy(50, SCREEN_HEIGHT/2, 5, "../assets/enemy.png");
+        Hero hero(SCREEN_WIDTH-50, SCREEN_HEIGHT/2, 4, "../assets/hero.png");
+        Enemy enemy(50, SCREEN_HEIGHT/2, 2.5, "../assets/enemy.png");
         while (window.isOpen()) {
             try {
                 handleEvents(window, squareGrid);  //Per aggiunta/rimozione ostacoli con il mouse
