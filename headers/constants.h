@@ -18,5 +18,4 @@ namespace constants{
 }
 
 
-
 #endif //ASTAR_CONSTANTS_H

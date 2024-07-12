@@ -678,7 +678,7 @@ GTEST_API_ extern ThreadLocal<Sequence*> g_gmock_implicit_sequence;
 //   expectations in a sequence).  Therefore these expectation objects
 //   must share a common base class.
 //
-//   2. We can avoid binary code bloat by moving methods not depending
+//   2. We can avoid binary code bloat by needsToMove methods not depending
 //   on the template argument of Expectation to the base class.
 //
 // This class is internal and mustn't be used by user code directly.

@@ -9,13 +9,13 @@
 
 class Enemy: public GameCharacter {
 private:
-    bool moving;
+    bool needsToMove;
 public:
-    Enemy(float x, float y, float speed, const string& txtPath):  GameCharacter(x, y, speed, txtPath, false), moving(false){}
+    Enemy(float x, float y, float speed, const string& txtPath): GameCharacter(x, y, speed, txtPath, false), needsToMove(false){}
     void move(float x, float y) override;
-    bool isMovementStarted() const{return moving;}
-    void stop(){moving = false;}
-    void startMovement(){moving = true;}
+    bool isMovementStarted() const{return needsToMove;}
+    void stop(){ needsToMove = false;}
+    void startMovement(){ needsToMove = true;}
 };
 
 

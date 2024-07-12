@@ -87,7 +87,7 @@ GTEST_API_ std::string FormatMatcherDescription(
 //     to the residual flow graph, which is a directional graph
 //     representing unused flow capacity.
 //
-// When the method augments a flow (moving left_[l] from some r1 to some
+// When the method augments a flow (needsToMove left_[l] from some r1 to some
 // other r2), this can be thought of as "undoing" the above steps with
 // respect to r1 and "redoing" them with respect to r2.
 //

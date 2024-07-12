@@ -986,7 +986,7 @@ class ReturnAction final {
             // explicit constructor from R.
             value(ImplicitCast_<U>(internal::as_const(input_value))) {}
 
-      // As above, but for the case where we're moving from the ReturnAction
+      // As above, but for the case where we're needsToMove from the ReturnAction
       // object because it's being used as a OnceAction.
       explicit State(R&& input_value_in)
           : input_value(std::move(input_value_in)),
@@ -1080,7 +1080,7 @@ class ReturnAction final {
 
 // A specialization of ReturnAction<R> when R is ByMoveWrapper<T> for some T.
 //
-// This version applies the type system-defeating hack of moving from T even in
+// This version applies the type system-defeating hack of needsToMove from T even in
 // the const call operator, checking at runtime that it isn't called more than
 // once, since the user has declared their intent to do so by using ByMove.
 template <typename T>

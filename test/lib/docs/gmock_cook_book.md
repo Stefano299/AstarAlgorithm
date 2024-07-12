@@ -2799,7 +2799,7 @@ consumed (since it’s a move-only value), so the next time around, there’s no
 value to move from -- you’ll get a run-time error that `Return(std::move(...))`
 can only be run once.
 
-If you need your mock method to do more than just moving a pre-defined value,
+If you need your mock method to do more than just needsToMove a pre-defined value,
 remember that you can always use a lambda or a callable object, which can do
 pretty much anything you want:
 
