@@ -10,12 +10,13 @@
 //inizializzati hero e enemy nel main. L'unica cosa IMPORTANTE è che, chiaramente SCREEN_HEIGHT deve essere = GRID_HEIGHT*SQUARE_SIZE.
 e SCREE_WIDTH = GRID_WIDTH*SQUARE_SIZE. */
 namespace constants{
-    const int SQUARE_SIZE = 13;
+    const int SQUARE_SIZE = 14;
     const int GRID_WIDTH = 90;
     const int GRID_HEIGHT = 56;
-    const int SCREEN_HEIGHT = 728;
-    const int SCREEN_WIDTH = 1170;
+    const int SCREEN_HEIGHT = 784;
+    const int SCREEN_WIDTH = 1260;
 }
+
 
 
 #endif //ASTAR_CONSTANTS_H

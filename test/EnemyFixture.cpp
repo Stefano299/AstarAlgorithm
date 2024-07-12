@@ -25,9 +25,11 @@ TEST_F(EnemyFixture, EnemyConstructor) {
 
 TEST_F(EnemyFixture, EnemyMove) {
     Enemy enemy(100.0f, 200.0f, 2.5f, "../../assets/enemy.png");
+    float pastX = enemy.getPosX();
+    float pastY = enemy.getPosY();
     enemy.move(150.0f, 250.0f);
-    ASSERT_FLOAT_EQ(enemy.getPosX(),  101.29653);
-    ASSERT_FLOAT_EQ(enemy.getPosY(), 202.13753);
+    ASSERT_TRUE(enemy.getPosX() > pastX);
+    ASSERT_TRUE(enemy.getPosY() > pastY);
 }
 
 

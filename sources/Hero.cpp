@@ -46,7 +46,7 @@ bool Hero::isColliding(float x, float y)const {  //x e y indicano lo spostamento
         fx = originPos;
     if(fy > originPos)
         fy = originPos;
-    float futureX = (posX + fx +originPos*sign(x))/SQUARE_SIZE; //Controllo un po' più avanti rispetto alla mia posizione
+    float futureX = (posX + fx + originPos*sign(x))/SQUARE_SIZE; //Controllo un po' più avanti rispetto alla mia posizione
     float futureY = (posY + fy + originPos*sign(y))/SQUARE_SIZE;
     if(futureX >= GRID_WIDTH || futureY >= GRID_HEIGHT || futureX < 0 || futureY < 0) //Per non farlo uscire dalla finestra
         collision = true;
